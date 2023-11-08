@@ -50,6 +50,25 @@ plt.xlabel('Customer Age')
 plt.ylabel('Purchase Amount (USD)')
 plt.title('Customer Age vs. Purchase Amount')
 plt.show()
+#Do correlation Test 
+from scipy.stats import pearsonr
+
+# Calculate Pearson's correlation coefficient and p-value
+correlation, p_value = pearsonr(df['Age'], df['Purchase Amount (USD)'])
+
+print(f"Pearson's Correlation: {correlation:.4f}")
+print(f"P-Value: {p_value:.4f}")
+
+# Interpret the results based on the p-value and correlation coefficient
+if p_value < 0.05:
+    print("There is a significant correlation between Age and Purchase Amount.")
+else:
+    print("There is no significant correlation between Age and Purchase Amount.")
+
+#The correlation coefficient is approximately -0.0104, so indicating a very weak
+#negative correlation between a customer's age and the purchase amount. And the p-value is 0.5152, which is greater than the typical significance level of 0.05.
+#Therefore, you conclude that there is no significant correlation between  customer's age and the purchase amount. 
+
 #%%
 
 
