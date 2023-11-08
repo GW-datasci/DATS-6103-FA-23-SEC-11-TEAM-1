@@ -119,11 +119,12 @@ plt.show()
 # %%
 
 
-# Create a boxplot to compare purchase amounts by marital status
-sns.boxplot(x='Marital Status', y='Purchase Amount (USD)', data=df)
-plt.xlabel('Marital Status')
+# Create a boxplot to compare purchase amounts by Size
+
+sns.boxplot(x='Size', y='Purchase Amount (USD)', data=df)
+plt.xlabel('Size')
 plt.ylabel('Purchase Amount (USD)')
-plt.title('Purchase Amount by Marital Status')
+plt.title('Purchase Amount by Size ')
 plt.show()
 
 
