@@ -102,6 +102,26 @@ plt.xlabel('Customer Gender')
 plt.ylabel('Average Purchase Amount (USD)')
 plt.title('Customer Gender vs. Purchase Amount')
 plt.show()
+from scipy.stats import ttest_ind
+
+# Separate into Male and Female groups
+male_data = df[df['Gender'] == 'Male']
+female_data = df[df['Gender'] == 'Female']
+
+# Perform a t-test to compare purchase amounts between Male and Female customers
+t_stat, p_value = ttest_ind(male_data['Purchase Amount (USD)'], female_data['Purchase Amount (USD)'])
+
+print(f"T-Statistic: {t_stat:.4f}")
+print(f"P-Value: {p_value:.4f}")
+
+# Interpret the results based on the p-value
+if p_value < 0.05:
+    print("There is a significant difference in Purchase Amount between Male and Female customers.")
+else:
+    print("There is no significant difference in Purchase Amount between Male and Female customers.")
+# t-statistic is approximately -0.8769.
+#The p-value is 0.3806, which is greater than the typical significance level of 0.05.
+#Therefore, there is no significant difference in purchase amounts between Male and Female customers.
 
 # %%
 
