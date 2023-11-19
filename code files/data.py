@@ -271,7 +271,31 @@ plt.xticks(rotation=0)  # Adjust the rotation angle of x-axis labels if needed
 plt.show()
 
 # %%
+# Create 5 equal-sized bins for 'Age' and 10 equal-sized bins for 'Purchase Amount (USD)'.
+age_bins = pd.cut(df['Age'], 5)
+purchase_amount_bins = pd.cut(df['Purchase Amount (USD)'], 10)
 
+# Compute the midpoints of the intervals for plotting
+df['Age Group Midpoint'] = age_bins.apply(lambda x: x.mid)
+df['Purchase Amount Group Midpoint'] = purchase_amount_bins.apply(lambda x: x.mid)
 
+# Create a FacetGrid for 'Gender', mapping each 'Gender' to a different color.
+g = sns.FacetGrid(df, col='Gender', hue='Gender', col_wrap=3, height=5)
 
+# Map a scatter plot to each subset of the data.
+g.map(plt.scatter, 'Age', 'Purchase Amount (USD)', alpha=0.6)
+
+# Add a legend and title and adjust the layout.
+g.add_legend()
+g.fig.suptitle('Age vs Purchase Amount vs Gender', y=1.03)
+g.fig.tight_layout()
+
+# Rotate the x-axis labels for better readability.
+for axes in g.axes.flat:
+    _ = plt.setp(axes.get_xticklabels(), rotation=45)
+
+# Show the plot.
+plt.show()
+# %%
+print(df['Size'])
 # %%
