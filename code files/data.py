@@ -83,6 +83,12 @@ plt.show()
 
 print("Slope:", slope)
 print("Intercept:", intercept)
+
+#The red line in the graph indicates the line of best fit to the data. It indicates the general trend of the purchase amount as the customer's age changes.
+#The slope of the regression line is approximately -0.0162, which means that for each additional year of age, the purchase amount decreases by approximately $0.016, with all other factors remaining constant.
+#The intercept is approximately $60.48. Theoretically, this suggests that a customer who is zero years old would correlate to a purchase of approximately $60.48, it's not meaningful because the baby can't buy a car. 
+#we can see the slope is very small, indicating a very weak negative correlation between age and purchase amount.
+
 #Do correlation Test 
 from scipy.stats import pearsonr
 
