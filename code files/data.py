@@ -50,6 +50,39 @@ plt.xlabel('Customer Age')
 plt.ylabel('Purchase Amount (USD)')
 plt.title('Customer Age vs. Purchase Amount')
 plt.show()
+
+# %%
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+import pandas as pd
+
+X = df['Age'].values.reshape(-1, 1)  # Predictor variable
+y = df['Purchase Amount (USD)'].values  # Response variable
+
+# create plot
+plt.figure(figsize=(10, 6))
+
+# scatterplot
+plt.scatter(X, y, color='blue', label='Actual Data')
+
+# create and bulid linearRegression
+model = LinearRegression()
+model.fit(X, y)
+slope = model.coef_[0]
+intercept = model.intercept_
+# using model to predict
+y_pred = model.predict(X)
+plt.plot(X, y_pred, color='red', label='Regression Line')
+
+plt.xlabel('Customer Age')
+plt.ylabel('Purchase Amount (USD)')
+plt.title('Linear Regression: Customer Age vs. Purchase Amount')
+plt.legend()
+
+plt.show()
+
+print("Slope:", slope)
+print("Intercept:", intercept)
 #Do correlation Test 
 from scipy.stats import pearsonr
 
