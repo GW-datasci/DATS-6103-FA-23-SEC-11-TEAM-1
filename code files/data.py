@@ -20,7 +20,112 @@ plt.figure(figsize=(10, 6))
 sns.heatmap(df.isnull(), cbar=False, cmap='viridis')
 plt.title('Missing Values in the Dataset')
 plt.show()
+#%%
+plt.figure(figsize = (20, 6))
+ax = df["Gender"].value_counts().plot(kind = 'bar', color = ["blue","pink"], rot = 0)
+ax.set_xticklabels(('Male', 'Female'))
+plt.title("male and female population",weight="bold")
+for p in ax.patches:
+    ax.annotate(int(p.get_height()), (p.get_x() + 0.25, p.get_height() + 1), ha = 'center', va = 'bottom', color = 'black')
+    ax.tick_params(axis = 'both', labelsize = 15)
+plt.xlabel('Employment Type', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
+plt.ylabel('Number of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+#%%
+fig, ax = plt.subplots(figsize = (20, 5))
 
+ax.hist(df['Age'], bins = 25, edgecolor = 'black', alpha = 0.7, color = 'skyblue', density = True)
+df['Age'].plot(kind = 'kde', color = 'red', ax = ax)
+
+ax.set_xlabel('Age')
+ax.set_ylabel('Count / Density')
+ax.set_title('Age Distribution Histogram with Density Curve')
+ax.legend(['Density Curve', 'Histogram'])
+plt.show()
+#%%
+plt.figure(figsize = (20, 6))
+ax = df["Category"].value_counts().plot(kind = 'bar', color = ["red","blue","pink","yellow"], rot = 0)
+ax.set_xticklabels(('Clothing', 'Accessories', 'Footwear', 'Outerwear'))
+plt.title("Category")
+for p in ax.patches:
+    ax.annotate(int(p.get_height()), (p.get_x() + 0.25, p.get_height() + 1), ha = 'center', va = 'bottom', color = 'black')
+    ax.tick_params(axis = 'both', labelsize = 15)
+plt.xlabel('Employment Type', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
+plt.title("Category vs frequency")
+plt.ylabel('Number of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+#%%
+
+plt.figure(figsize = (16, 6))
+df["Location"].value_counts()[:10].sort_values(ascending = False).plot(kind = 'bar', color = sns.color_palette('inferno'), edgecolor = 'black')
+plt.xlabel('Location', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
+plt.ylabel('\nNumber of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+plt.xticks(rotation = 0, ha = 'center', fontsize = 16)
+plt.title("Location vs frequency")
+plt.tight_layout()
+plt.show()
+#%%
+plt.figure(figsize = (20, 6))
+ax = df["Size"].value_counts().plot(kind = 'bar', color = ["red","blue","green","yellow"], rot = 0)
+ax.set_xticklabels(('Medium', 'Large', 'Small', 'Extra Large'))
+plt.title("Size vs frequency")
+for p in ax.patches:
+    ax.annotate(int(p.get_height()), (p.get_x() + 0.25, p.get_height() + 1), ha = 'center', va = 'bottom', color = 'black')
+    ax.tick_params(axis = 'both', labelsize = 15)
+plt.xlabel('Size', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
+plt.ylabel('Number of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+#%%
+plt.figure(figsize = (16, 6))
+df["Color"].value_counts()[:10].sort_values(ascending = True).plot(kind = 'barh', color = sns.color_palette('tab20'), edgecolor = 'black')
+plt.xlabel('Color', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
+plt.ylabel('\nNumber of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+plt.xticks(rotation = 0, ha = 'center', fontsize = 16)
+plt.title("Colour vs frequency")
+plt.tight_layout()
+plt.show()
+#%%
+plt.figure(figsize = (20, 6))
+
+counts = df["Season"].value_counts()
+explode = (0, 0, 0, 0)
+
+counts.plot(kind = 'pie', fontsize = 12, colors = ["red","blue","green","yellow"], explode = explode, autopct = '%1.1f%%')
+plt.xlabel('Size', weight = "bold", color = "#2F0F5D", fontsize = 14, labelpad = 20)
+plt.title("Season vs Size")
+plt.axis('equal')
+plt.legend(labels = counts.index, loc = "best")
+plt.show()
+#%%
+plt.figure(figsize = (20, 6))
+ax = df["Subscription Status"].value_counts().plot(kind = 'bar', color =["red","blue"] , rot = 0)
+ax.set_xticklabels(('No', 'Yes'))
+plt.title("Subscription Status")
+for p in ax.patches:
+    ax.annotate(int(p.get_height()), (p.get_x() + 0.25, p.get_height() + 1), ha = 'center', va = 'bottom', color = 'black')
+    ax.tick_params(axis = 'both', labelsize = 15)
+plt.xlabel('Subscription Status', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
+plt.ylabel('Number of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+
+#%%
+plt.figure(figsize = (20, 6))
+
+counts = df["Payment Method"].value_counts()
+explode = (0, 0, 0, 0, 0.0, 0.06)
+plt.title("Payment Method",weight="bold")
+counts.plot(kind = 'pie', fontsize = 12, colors = ["red","blue","green","yellow","pink","purple"], autopct = '%1.1f%%')
+plt.xlabel('Size', weight = "bold", color = "#2F0F5D", fontsize = 14, labelpad = 20)
+plt.axis('equal')
+plt.legend(labels = counts.index, loc = "best")
+plt.show()
+#%%
+plt.figure(figsize = (20, 6))
+
+counts = df["Frequency of Purchases"].value_counts()
+explode = (0, 0, 0, 0, 0.0, 0, 0.06)
+plt.title("Frequency of Purchases",weight="bold")
+counts.plot(kind = 'pie', fontsize = 12, colors  = ["red","blue","green","yellow","pink","purple","orange"], autopct = '%1.1f%%')
+plt.xlabel('Size', weight = "bold", color = "#2F0F5D", fontsize = 14, labelpad = 20)
+plt.axis('equal')
+plt.legend(labels = counts.index, loc = "best")
+plt.show()
 # %%
 
 
@@ -446,27 +551,6 @@ print(f"R-squared: {r2}")
 # Analyze coefficients
 coefficients = pd.DataFrame({'Variable': X.columns, 'Coefficient': model.coef_})
 print(coefficients)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
