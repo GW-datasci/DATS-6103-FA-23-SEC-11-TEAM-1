@@ -310,6 +310,10 @@ plt.xticks(rotation=0)  # Adjust the rotation angle of x-axis labels if needed
 plt.show()
 
 # %%
+
+
+# %%
+### DONE BY TEAM 
 # Create 5 equal-sized bins for 'Age' and 10 equal-sized bins for 'Purchase Amount (USD)'.
 age_bins = pd.cut(df['Age'], 5)
 purchase_amount_bins = pd.cut(df['Purchase Amount (USD)'], 10)
@@ -335,6 +339,101 @@ for axes in g.axes.flat:
 
 # Show the plot.
 plt.show()
+
+
 # %%
-print(df['Size'])
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+
+# Assuming 'data' is the DataFrame containing your dataset
+# Dropping non-numeric columns like 'Customer ID' and 'Promo Code Used' for correlation analysis
+numeric_data = df.drop(columns=['Customer ID', 'Promo Code Used'])
+
+# Encoding categorical variables
+le = LabelEncoder()
+for column in numeric_data.columns:
+    if numeric_data[column].dtype == 'object':
+        numeric_data[column] = le.fit_transform(numeric_data[column])
+
+# Calculate the correlation matrix
+correlation_matrix = numeric_data.corr()
+
+# Print correlation matrix
+print(correlation_matrix)
+
+# %%
+plt.figure(figsize =(20,6))
+
+counts = df["Gender"].value_counts()
+explode = (0,0.05)
+
+counts.plot(kind = 'pie' ,fontsize = 12, colors = ["red","blue"], explode = explode, autopct = '%.1f%%')
+plt.title('Males Vs Females')
+plt.xlabel('Gender', weight = "bold", color = "#2F0F5D", fontsize = 14, labelpad = 20)
+plt.ylabel('Counts', weight = "bold", color = "#2F0F5D", fontsize = 14, labelpad = 20)
+plt.legend(labels = counts.index, loc = "best")
+
+plt.show()
+# %%
+plt.figure(figsize=(20,6))
+
+ax = df["Category"].value_counts().plot(kind= 'bar' , color = '#21cf4a' ,rot = 0)
+
+for p in ax.patches:
+     ax.annotate(int(p.get_height()), (p.get_x() + 0.25, p.get_height() + 1), ha = 'center', va = 'bottom', color = 'black')
+     ax.tick_params(axis = 'both', labelsize = 15)
+
+    
+plt.xlabel('Item Gategory', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
+plt.ylabel('Counts', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+# %%
+# Define mappings for 'Category' and 'Location'
+category_mapping = {'Clothing': 1, 'Accessories': 2, 'Footwear': 3, 'Outerwear': 4,"Blouse":5}
+location_mapping = {'Kentucky': 1, 'Maine': 2, 'Massachusetts': 3, 'Rhode Island': 4,} 
+Genger_mapping={"Male":1,"Female":0}
+
+df['Gender'] = df['Gender'].map(Genger_mapping)
+#%%
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load your dataset (replace 'data.csv' with your dataset file)
+data = df
+
+# Encode categorical variables
+label_encoder = LabelEncoder()
+data['encoded_category'] = label_encoder.fit_transform(data['Category'])
+data['encoded_location'] = label_encoder.fit_transform(data['Location'])
+
+# Define independent and dependent variables
+X = data[['Age', 'Gender', 'Review Rating']]
+y = data['Purchase Amount (USD)']
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Build and train the linear regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Make predictions
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"Mean Squared Error: {mse}")
+print(f"R-squared: {r2}")
+
+# Analyze coefficients
+coefficients = pd.DataFrame({'Variable': X.columns, 'Coefficient': model.coef_})
+print(coefficients)
+
+# %%
+df.isnull
+
 # %%
