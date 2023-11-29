@@ -230,10 +230,10 @@ plt.show()
 
 # Create a violin plot to show the distribution of purchase amounts by location
 plt.figure(figsize=(10, 6))  # Adjust the figure size
-ax = sns.violinplot(x='Location', y='Purchase Amount (USD)', data=df)
-ax.set_xlabel('Location', fontsize=12)  # Set x-axis label and font size
+ax = sns.violinplot(x='Category', y='Purchase Amount (USD)', data=df)
+ax.set_xlabel('Category', fontsize=12)  # Set x-axis label and font size
 ax.set_ylabel('Purchase Amount (USD)', fontsize=12)  # Set y-axis label and font size
-ax.set_title('Location-wise Purchase Amount Distribution', fontsize=14)  # Set title and font size
+ax.set_title('Category-wise Purchase Amount Distribution', fontsize=14)  # Set title and font size
 ax.set_xticklabels(ax.get_xticklabels(), fontsize=10, rotation=90)  # Adjust x-axis label font size and rotation
 
 plt.show()
@@ -389,10 +389,24 @@ plt.ylabel('Counts', weight = "bold", color = "#D71313", fontsize = 14, labelpad
 # %%
 # Define mappings for 'Category' and 'Location'
 category_mapping = {'Clothing': 1, 'Accessories': 2, 'Footwear': 3, 'Outerwear': 4,"Blouse":5}
-location_mapping = {'Kentucky': 1, 'Maine': 2, 'Massachusetts': 3, 'Rhode Island': 4,} 
+states = [
+    "Kentucky", "Maine", "Massachusetts", "Rhode Island", "Oregon", "Wyoming", "Montana", "Louisiana",
+    "West Virginia", "Missouri", "Arkansas", "Hawaii", "Delaware", "New Hampshire", "New York", "Alabama",
+    "Mississippi", "North Carolina", "California", "Oklahoma", "Florida", "Texas", "Nevada", "Kansas",
+    "Colorado", "North Dakota", "Illinois", "Indiana", "Arizona", "Alaska", "Tennessee", "Ohio", "New Jersey",
+    "Maryland", "Vermont", "New Mexico", "South Carolina", "Idaho", "Pennsylvania", "Connecticut", "Utah",
+    "Virginia", "Georgia", "Nebraska", "Iowa", "South Dakota", "Minnesota", "Washington", "Wisconsin",
+    "Michigan"
+]
+
+state_numbers = {state: index + 1 for index, state in enumerate(states)}
+
 Genger_mapping={"Male":1,"Female":0}
+category_mapping ={"Clothing":1,"Footwear":2,"Outerwear":3,"Accessories":4}
 
 df['Gender'] = df['Gender'].map(Genger_mapping)
+df['Location']=df["Location"].map(state_numbers)
+df["Category"]=df["Category"].map(category_mapping)
 #%%
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -409,7 +423,7 @@ data['encoded_category'] = label_encoder.fit_transform(data['Category'])
 data['encoded_location'] = label_encoder.fit_transform(data['Location'])
 
 # Define independent and dependent variables
-X = data[['Age', 'Gender', 'Review Rating']]
+X = data[['Age', 'Gender', 'Review Rating',"Location","Category","Gender"]]
 y = data['Purchase Amount (USD)']
 
 # Split data into training and testing sets
@@ -433,7 +447,207 @@ print(f"R-squared: {r2}")
 coefficients = pd.DataFrame({'Variable': X.columns, 'Coefficient': model.coef_})
 print(coefficients)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # %%
 df.isnull
 
 # %%
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+import pandas as pd
+
+X = df['Location'].values.reshape(-1, 1)  # Predictor variable
+y = df['Purchase Amount (USD)'].values  # Response variable
+
+# create plot
+plt.figure(figsize=(10, 6))
+
+# scatterplot
+plt.scatter(X, y, color='blue', label='Actual Data')
+
+# create and bulid linearRegression
+model = LinearRegression()
+model.fit(X, y)
+slope = model.coef_[0]
+intercept = model.intercept_
+# using model to predict
+y_pred = model.predict(X)
+plt.plot(X, y_pred, color='red', label='Regression Line')
+
+plt.xlabel('Location')
+plt.ylabel('Purchase Amount (USD)')
+plt.title('Linear Regression: Location vs. Purchase Amount')
+plt.legend()
+
+plt.show()
+
+print("Slope:", slope)
+print("Intercept:", intercept)
+
+#The red line in the graph indicates the line of best fit to the data. It indicates the general trend of the purchase amount as the customer's age changes.
+#The slope of the regression line is approximately -0.0162, which means that for each additional year of age, the purchase amount decreases by approximately $0.016, with all other factors remaining constant.
+#The intercept is approximately $60.48. Theoretically, this suggests that a customer who is zero years old would correlate to a purchase of approximately $60.48, it's not meaningful because the baby can't buy a car. 
+#we can see the slope is very small, indicating a very weak negative correlation between age and purchase amount.
+
+#Do correlation Test 
+from scipy.stats import pearsonr
+
+# Calculate Pearson's correlation coefficient and p-value
+correlation, p_value = pearsonr(df['Location'], df['Purchase Amount (USD)'])
+
+print(f"Pearson's Correlation: {correlation:.4f}")
+print(f"P-Value: {p_value:.4f}")
+
+# Interpret the results based on the p-value and correlation coefficient
+if p_value < 0.05:
+    print("There is a significant correlation between Location and Purchase Amount.")
+else:
+    print("There is no significant correlation between LOcation and Purchase Amount.")
+
+#The correlation coefficient is approximately -0.0104, so indicating a very weak
+#negative correlation between a customer's age and the purchase amount. And the p-value is 0.5152, which is greater than the typical significance level of 0.05.
+#Therefore, you conclude that there is no significant correlation between  customer's age and the purchase amount. 
+
+# %%
+# %%
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+import pandas as pd
+
+X = df['Category'].values.reshape(-1, 1)  # Predictor variable
+y = df['Purchase Amount (USD)'].values  # Response variable
+
+# create plot
+plt.figure(figsize=(10, 6))
+
+# scatterplot
+plt.scatter(X, y, color='blue', label='Actual Data')
+
+# create and bulid linearRegression
+model = LinearRegression()
+model.fit(X, y)
+slope = model.coef_[0]
+intercept = model.intercept_
+# using model to predict
+y_pred = model.predict(X)
+plt.plot(X, y_pred, color='red', label='Regression Line')
+
+plt.xlabel('Category')
+plt.ylabel('Purchase Amount (USD)')
+plt.title('Linear Regression:  Category vs. Purchase Amount')
+plt.legend()
+
+plt.show()
+
+print("Slope:", slope)
+print("Intercept:", intercept)
+
+#The red line in the graph indicates the line of best fit to the data. It indicates the general trend of the purchase amount as the customer's age changes.
+#The slope of the regression line is approximately -0.0162, which means that for each additional year of age, the purchase amount decreases by approximately $0.016, with all other factors remaining constant.
+#The intercept is approximately $60.48. Theoretically, this suggests that a customer who is zero years old would correlate to a purchase of approximately $60.48, it's not meaningful because the baby can't buy a car. 
+#we can see the slope is very small, indicating a very weak negative correlation between age and purchase amount.
+
+#Do correlation Test 
+from scipy.stats import pearsonr
+
+# Calculate Pearson's correlation coefficient and p-value
+correlation, p_value = pearsonr(df['Category'], df['Purchase Amount (USD)'])
+
+print(f"Pearson's Correlation: {correlation:.4f}")
+print(f"P-Value: {p_value:.4f}")
+
+# Interpret the results based on the p-value and correlation coefficient
+if p_value < 0.05:
+    print("There is a significant correlation between  Category and Purchase Amount.")
+else:
+    print("There is no significant correlation between  Category and Purchase Amount.")
+
+#The correlation coefficient is approximately -0.0104, so indicating a very weak
+#negative correlation between a customer's age and the purchase amount. And the p-value is 0.5152, which is greater than the typical significance level of 0.05.
+#Therefore, you conclude that there is no significant correlation between  customer's age and the purchase amount. 
+
+# %%
+ # %%
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+import pandas as pd
+
+X = df['Location'].values.reshape(-1, 1)  # Predictor variable
+y = df['Purchase Amount (USD)'].values  # Response variable
+
+# create plot
+plt.figure(figsize=(10, 6))
+
+# scatterplot
+plt.scatter(X, y, color='blue', label='Actual Data')
+
+# create and bulid linearRegression
+model = LinearRegression()
+model.fit(X, y)
+slope = model.coef_[0]
+intercept = model.intercept_
+# using model to predict
+y_pred = model.predict(X)
+plt.plot(X, y_pred, color='red', label='Regression Line')
+
+plt.xlabel('Location')
+plt.ylabel('Purchase Amount (USD)')
+plt.title('Linear Regression: Location vs. Purchase Amount')
+plt.legend()
+
+plt.show()
+
+print("Slope:", slope)
+print("Intercept:", intercept)
+
+#The red line in the graph indicates the line of best fit to the data. It indicates the general trend of the purchase amount as the customer's age changes.
+#The slope of the regression line is approximately -0.0162, which means that for each additional year of age, the purchase amount decreases by approximately $0.016, with all other factors remaining constant.
+#The intercept is approximately $60.48. Theoretically, this suggests that a customer who is zero years old would correlate to a purchase of approximately $60.48, it's not meaningful because the baby can't buy a car. 
+#we can see the slope is very small, indicating a very weak negative correlation between age and purchase amount.
+
+#Do correlation Test 
+from scipy.stats import pearsonr
+
+# Calculate Pearson's correlation coefficient and p-value
+correlation, p_value = pearsonr(df['Location'], df['Purchase Amount (USD)'])
+
+print(f"Pearson's Correlation: {correlation:.4f}")
+print(f"P-Value: {p_value:.4f}")
+
+# Interpret the results based on the p-value and correlation coefficient
+if p_value < 0.05:
+    print("There is a significant correlation between Location and Purchase Amount.")
+else:
+    print("There is no significant correlation between LOcation and Purchase Amount.")
+
+#The correlation coefficient is approximately -0.0104, so indicating a very weak
+#negative correlation between a customer's age and the purchase amount. And the p-value is 0.5152, which is greater than the typical significance level of 0.05.
+#Therefore, you conclude that there is no significant correlation between  customer's age and the purchase amount. 
+#%%
