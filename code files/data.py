@@ -632,7 +632,7 @@ y = df['Purchase Amount (USD)'].values  # Response variable
 plt.figure(figsize=(10, 6))
 
 # scatterplot
-plt.scatter(X, y, color='blue', label='Actual Data')
+plt.scatter(X, y, color='lightblue', label='Actual Data')
 
 # create and bulid linearRegression
 model = LinearRegression()
@@ -678,60 +678,4 @@ else:
 #Therefore, you conclude that there is no significant correlation between  customer's age and the purchase amount. 
 
 # %%
- # %%
-import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
-import pandas as pd
-
-X = df['Location'].values.reshape(-1, 1)  # Predictor variable
-y = df['Purchase Amount (USD)'].values  # Response variable
-
-# create plot
-plt.figure(figsize=(10, 6))
-
-# scatterplot
-plt.scatter(X, y, color='blue', label='Actual Data')
-
-# create and bulid linearRegression
-model = LinearRegression()
-model.fit(X, y)
-slope = model.coef_[0]
-intercept = model.intercept_
-# using model to predict
-y_pred = model.predict(X)
-plt.plot(X, y_pred, color='red', label='Regression Line')
-
-plt.xlabel('Location')
-plt.ylabel('Purchase Amount (USD)')
-plt.title('Linear Regression: Location vs. Purchase Amount')
-plt.legend()
-
-plt.show()
-
-print("Slope:", slope)
-print("Intercept:", intercept)
-
-#The red line in the graph indicates the line of best fit to the data. It indicates the general trend of the purchase amount as the customer's age changes.
-#The slope of the regression line is approximately -0.0162, which means that for each additional year of age, the purchase amount decreases by approximately $0.016, with all other factors remaining constant.
-#The intercept is approximately $60.48. Theoretically, this suggests that a customer who is zero years old would correlate to a purchase of approximately $60.48, it's not meaningful because the baby can't buy a car. 
-#we can see the slope is very small, indicating a very weak negative correlation between age and purchase amount.
-
-#Do correlation Test 
-from scipy.stats import pearsonr
-
-# Calculate Pearson's correlation coefficient and p-value
-correlation, p_value = pearsonr(df['Location'], df['Purchase Amount (USD)'])
-
-print(f"Pearson's Correlation: {correlation:.4f}")
-print(f"P-Value: {p_value:.4f}")
-
-# Interpret the results based on the p-value and correlation coefficient
-if p_value < 0.05:
-    print("There is a significant correlation between Location and Purchase Amount.")
-else:
-    print("There is no significant correlation between LOcation and Purchase Amount.")
-
-#The correlation coefficient is approximately -0.0104, so indicating a very weak
-#negative correlation between a customer's age and the purchase amount. And the p-value is 0.5152, which is greater than the typical significance level of 0.05.
-#Therefore, you conclude that there is no significant correlation between  customer's age and the purchase amount. 
-#%%
+ 
