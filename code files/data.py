@@ -750,4 +750,37 @@ mse, r2
 #non-linear models or incorporating additional factors might improve predictive accuracy.
 
 
+# %%
+##Non-Linear Models
+#Random Forest
+from sklearn.ensemble import RandomForestRegressor
 
+# Create and fit the random forest regressor
+random_forest_regressor = RandomForestRegressor(n_estimators=100, random_state=42)
+random_forest_regressor.fit(X_train, y_train)
+
+# Predict on the test set
+y_pred_rf = random_forest_regressor.predict(X_test)
+
+# Calculate the performance metrics for the random forest model
+mse_rf = mean_squared_error(y_test, y_pred_rf)
+r2_rf = r2_score(y_test, y_pred_rf)
+
+mse_rf, r2_rf
+
+# Plot the actual vs predicted values using the Random Forest model for visualization
+plt.figure(figsize=(12, 6))
+
+# Plotting only the first 100 instances 
+plt.scatter(range(len(y_test[:100])), y_test[:100], color='blue', label='Actual')
+plt.scatter(range(len(y_pred_rf[:100])), y_pred_rf[:100], color='red', label='Predicted', alpha=0.8)
+
+plt.title('Actual vs Predicted Purchase Amounts (USD) - Random Forest Model')
+plt.xlabel('Index of Instance')
+plt.ylabel('Purchase Amount (USD)')
+plt.legend()
+plt.show()
+# In this plot I only present 100 instances, The scatter plot shows a mismatch between the
+# actual purchase amounts (blue points) and the model's predictions (red points), reflecting
+# the poor model fit indicated by the negative R² value. This suggests the need for model
+# adjustments or exploring different predictive approaches.
