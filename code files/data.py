@@ -766,3 +766,30 @@ category_correlations
 #or negative. This reinforces the earlier finding that purchase amount does not significantly
 #influence repurchase behavior across the dataset as a whole. The inclusion of product categories
 #does not seem to change this conclusion significantly
+
+#%%
+df1 = df.copy(deep=True)
+# Calculate total sales for each item in each season
+grouped_df1 = df1.groupby(['Season', 'Item Purchased']).agg({'Purchase Amount (USD)': 'sum'}).rename(columns={'Purchase Amount (USD)': 'Total Sales'}).reset_index()
+
+# Find top 5 products in each season based on total sales
+top_products_per_season = grouped_df1.groupby('Season').apply(lambda x: x.nlargest(5, 'Total Sales')).reset_index(drop=True)
+
+# Separate the data by season
+spring_data = top_products_per_season[top_products_per_season['Season'] == 'Spring']
+summer_data = top_products_per_season[top_products_per_season['Season'] == 'Summer']
+fall_data = top_products_per_season[top_products_per_season['Season'] == 'Fall']
+winter_data = top_products_per_season[top_products_per_season['Season'] == 'Winter']
+
+# Create a bar plot for each season
+fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(15, 10))
+fig.suptitle('Top 5 Best-Selling Products per Season')
+
+sns.barplot(x='Item Purchased', y='Total Sales', data=spring_data, ax=axes[0, 0]).set_title('Spring')
+sns.barplot(x='Item Purchased', y='Total Sales', data=summer_data, ax=axes[0, 1]).set_title('Summer')
+sns.barplot(x='Item Purchased', y='Total Sales', data=fall_data, ax=axes[1, 0]).set_title('Fall')
+sns.barplot(x='Item Purchased', y='Total Sales', data=winter_data, ax=axes[1, 1]).set_title('Winter')
+
+# Adjust layout for readability
+plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.show()
