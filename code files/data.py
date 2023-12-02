@@ -784,3 +784,26 @@ plt.show()
 # actual purchase amounts (blue points) and the model's predictions (red points), reflecting
 # the poor model fit indicated by the negative R² value. This suggests the need for model
 # adjustments or exploring different predictive approaches.
+
+# %%
+# Calculating IQR for 'Purchase Amount (USD)'
+Q1 = df['Purchase Amount (USD)'].quantile(0.25)
+Q3 = df['Purchase Amount (USD)'].quantile(0.75)
+IQR = Q3 - Q1
+
+# Determining the bounds for outliers
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+# Filtering out outliers
+data_no_outliers = df[(df['Purchase Amount (USD)'] >= lower_bound) & (df['Purchase Amount (USD)'] <= upper_bound)]
+
+# Calculating the correlation in the cleaned dataset
+cleaned_correlation = data_no_outliers['Purchase Amount (USD)'].corr(data_no_outliers['Previous Purchases'])
+cleaned_correlation, df.shape[0], data_no_outliers.shape[0]  
+
+#Removing outliers from the 'Purchase Amount (USD)' column did not change the correlation
+#coefficient with the number of previous purchases, remaining at approximately 0.0081.
+#The dataset size also remained the same, indicating no outliers were removed. This implies 
+#the weak correlation observed is not influenced by outliers and suggests that purchase amount 
+#does not significantly affect repeat purchases in this dataset.
