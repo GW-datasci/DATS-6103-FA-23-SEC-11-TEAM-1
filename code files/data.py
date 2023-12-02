@@ -11,7 +11,7 @@ df = pd.read_csv('shopping_trends.csv')
 df
 
 # %%
-#summary of the data set
+# Summary of the data set
 df.describe()
 
 # %%
@@ -24,20 +24,19 @@ sns.heatmap(df.isnull(), cbar=False, cmap='viridis')
 plt.title('Missing Values in the Dataset')
 plt.show()
 
-#%%
-plt.figure(figsize = (20, 6))
-ax = df["Gender"].value_counts().plot(kind = 'bar', color = ["blue","pink"], rot = 0)
-ax.set_xticklabels(('Male', 'Female'))
-plt.title("male and female population",weight="bold")
-for p in ax.patches:
-    ax.annotate(int(p.get_height()), (p.get_x() + 0.25, p.get_height() + 1), ha = 'center', va = 'bottom', color = 'black')
-    ax.tick_params(axis = 'both', labelsize = 15)
-plt.xlabel('Employment Type', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
-plt.ylabel('Number of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+print("From the above plot, we see that the dataset has no missing values.")
 
 #%%
-fig, ax = plt.subplots(figsize = (20, 5))
-ax.hist(df['Age'], bins = 25, edgecolor = 'black', alpha = 0.7, color = 'skyblue', density = True)
+plt.figure(figsize = (10, 6))
+ax = df["Gender"].value_counts().plot(kind = 'bar', color = ["#7f8c8d","#f39c12"], rot = 0)
+ax.set_xticklabels(('Male', 'Female'))
+plt.title("Gender Distribution",weight="bold")
+plt.xlabel('Gender', fontsize = 14, labelpad = 20)
+plt.ylabel('Count', fontsize = 14, labelpad = 20)
+
+#%%
+fig, ax = plt.subplots(figsize = (10, 6))
+ax.hist(df['Age'], bins = 25, edgecolor = 'black', alpha = 0.7, color = '#1f77b4', density = True)
 df['Age'].plot(kind = 'kde', color = 'red', ax = ax)
 ax.set_xlabel('Age')
 ax.set_ylabel('Count / Density')
@@ -46,24 +45,27 @@ ax.legend(['Density Curve', 'Histogram'])
 plt.show()
 
 #%%
-plt.figure(figsize = (20, 6))
-ax = df["Category"].value_counts().plot(kind = 'bar', color = ["red","blue","pink","yellow"], rot = 0)
+plt.figure(figsize = (12,8))
+colors = ['#3498db', '#2ecc71', '#e74c3c', '#f1c40f']
+ax = df["Category"].value_counts().plot(kind = 'bar', color=colors, rot = 0)
 ax.set_xticklabels(('Clothing', 'Accessories', 'Footwear', 'Outerwear'))
 plt.title("Category")
 for p in ax.patches:
     ax.annotate(int(p.get_height()), (p.get_x() + 0.25, p.get_height() + 1), ha = 'center', va = 'bottom', color = 'black')
     ax.tick_params(axis = 'both', labelsize = 15)
-plt.xlabel('Employment Type', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
-plt.title("Category vs frequency")
-plt.ylabel('Number of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+plt.xlabel('Product Category', fontsize = 14, labelpad = 20)
+plt.title("Distribution of Product Categories", weight = "bold", fontsize = 16)
+plt.ylabel('Count', fontsize = 14, labelpad = 20)
 
 #%%
-plt.figure(figsize = (16, 6))
-df["Location"].value_counts()[:10].sort_values(ascending = False).plot(kind = 'bar', color = sns.color_palette('inferno'), edgecolor = 'black')
-plt.xlabel('Location', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
-plt.ylabel('\nNumber of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
-plt.xticks(rotation = 0, ha = 'center', fontsize = 16)
-plt.title("Location vs frequency")
+plt.figure(figsize=(14, 8))
+palette = sns.color_palette("viridis", n_colors=10)  # A gradient color palette
+df["Location"].value_counts()[:10].sort_values(ascending=False).plot(kind='bar', color=palette, edgecolor='black')
+plt.xlabel('State', weight="bold", fontsize=16, labelpad=20)
+plt.ylabel('Frequency Count', weight="bold", fontsize=16, labelpad=20)
+plt.xticks(rotation=45, ha='right', fontsize=14)  # Rotating for better label visibility
+plt.yticks(fontsize=14)
+plt.title("Top 10 States by Purchase Frequency", weight="bold", fontsize=18)
 plt.tight_layout()
 plt.show()
 
