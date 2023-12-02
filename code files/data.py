@@ -678,4 +678,27 @@ else:
 #Therefore, you conclude that there is no significant correlation between  customer's age and the purchase amount. 
 
 # %%
+#Is there a correlation between the purchase amount and the customer's
+#re-purchase behavior (e.g. number of previous purchases) and the product category?
+
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Correlation analysis between 'Purchase Amount (USD)' and 'Previous Purchases'
+##heatmap
+correlation = df[['Purchase Amount (USD)', 'Previous Purchases']].corr()
+
+# Visualization of this correlation
+plt.figure(figsize=(10, 6))
+sns.heatmap(correlation, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title("Correlation between Purchase Amount and Previous Purchases")
+plt.show()
+
+#The correlation coefficient of 0.01 between 'Purchase Amount (USD)' and 
+#'Previous Purchases' suggests no significant linear relationship between 
+#these variables, indicating that the frequency of a customer's previous 
+#purchases does not linearly correlate with their spending amount.
+
  
