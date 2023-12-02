@@ -702,3 +702,52 @@ plt.show()
 #purchases does not linearly correlate with their spending amount.
 
  
+# %%
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+
+# For simplicity, we will select a subset of potential predictor variables for the regression model
+# We will include both numeric and categorical variables and will use one-hot encoding for the categorical variables
+numeric_features = ['Age', 'Review Rating', 'Previous Purchases']
+categorical_features = ['Gender', 'Category', 'Season', 'Subscription Status', 'Discount Applied', 'Promo Code Used']
+
+# Prepare the features DataFrame
+X = df[numeric_features + categorical_features]
+# Prepare the target variable
+y = df['Purchase Amount (USD)']
+
+# One-hot encode the categorical variables
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', 'passthrough', numeric_features),
+        ('cat', OneHotEncoder(), categorical_features)])
+X_processed = preprocessor.fit_transform(X)
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X_processed, y, test_size=0.2, random_state=42)
+
+# Create and fit the regression model
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
+
+# Predict on the test set
+y_pred = regressor.predict(X_test)
+
+# Calculate the performance metrics
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+mse, r2
+
+#The high Mean Squared Error (MSE) in the model indicates a significant deviation between the 
+#predicted and actual purchase amounts, suggesting a poor model fit. Additionally, the R²
+#value is negative, implies that the model fails to effectively predict purchase amounts and 
+#is not better than a simplistic mean-based model. These outcomes suggest that the model's 
+#features lack a strong linear relationship with the 'Purchase Amount (USD)', and that exploring
+#non-linear models or incorporating additional factors might improve predictive accuracy.
+
+
+
