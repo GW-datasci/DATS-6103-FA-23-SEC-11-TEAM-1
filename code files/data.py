@@ -9,17 +9,21 @@ import missingno as msno
 #%%
 df = pd.read_csv('shopping_trends.csv')
 df
+
 # %%
 #summary of the data set
 df.describe()
+
 # %%
 df.isnull().sum()
+
 # %%
 # Create a heatmap to visualize missing values
 plt.figure(figsize=(10, 6))
 sns.heatmap(df.isnull(), cbar=False, cmap='viridis')
 plt.title('Missing Values in the Dataset')
 plt.show()
+
 #%%
 plt.figure(figsize = (20, 6))
 ax = df["Gender"].value_counts().plot(kind = 'bar', color = ["blue","pink"], rot = 0)
@@ -30,17 +34,17 @@ for p in ax.patches:
     ax.tick_params(axis = 'both', labelsize = 15)
 plt.xlabel('Employment Type', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
 plt.ylabel('Number of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+
 #%%
 fig, ax = plt.subplots(figsize = (20, 5))
-
 ax.hist(df['Age'], bins = 25, edgecolor = 'black', alpha = 0.7, color = 'skyblue', density = True)
 df['Age'].plot(kind = 'kde', color = 'red', ax = ax)
-
 ax.set_xlabel('Age')
 ax.set_ylabel('Count / Density')
 ax.set_title('Age Distribution Histogram with Density Curve')
 ax.legend(['Density Curve', 'Histogram'])
 plt.show()
+
 #%%
 plt.figure(figsize = (20, 6))
 ax = df["Category"].value_counts().plot(kind = 'bar', color = ["red","blue","pink","yellow"], rot = 0)
@@ -52,8 +56,8 @@ for p in ax.patches:
 plt.xlabel('Employment Type', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
 plt.title("Category vs frequency")
 plt.ylabel('Number of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
-#%%
 
+#%%
 plt.figure(figsize = (16, 6))
 df["Location"].value_counts()[:10].sort_values(ascending = False).plot(kind = 'bar', color = sns.color_palette('inferno'), edgecolor = 'black')
 plt.xlabel('Location', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
@@ -62,6 +66,7 @@ plt.xticks(rotation = 0, ha = 'center', fontsize = 16)
 plt.title("Location vs frequency")
 plt.tight_layout()
 plt.show()
+
 #%%
 plt.figure(figsize = (20, 6))
 ax = df["Size"].value_counts().plot(kind = 'bar', color = ["red","blue","green","yellow"], rot = 0)
@@ -72,6 +77,7 @@ for p in ax.patches:
     ax.tick_params(axis = 'both', labelsize = 15)
 plt.xlabel('Size', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
 plt.ylabel('Number of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+
 #%%
 plt.figure(figsize = (16, 6))
 df["Color"].value_counts()[:10].sort_values(ascending = True).plot(kind = 'barh', color = sns.color_palette('tab20'), edgecolor = 'black')
@@ -81,9 +87,9 @@ plt.xticks(rotation = 0, ha = 'center', fontsize = 16)
 plt.title("Colour vs frequency")
 plt.tight_layout()
 plt.show()
+
 #%%
 plt.figure(figsize = (20, 6))
-
 counts = df["Season"].value_counts()
 explode = (0, 0, 0, 0)
 
@@ -93,6 +99,7 @@ plt.title("Season vs Size")
 plt.axis('equal')
 plt.legend(labels = counts.index, loc = "best")
 plt.show()
+
 #%%
 plt.figure(figsize = (20, 6))
 ax = df["Subscription Status"].value_counts().plot(kind = 'bar', color =["red","blue"] , rot = 0)
@@ -106,7 +113,6 @@ plt.ylabel('Number of Occurrences', weight = "bold", color = "#D71313", fontsize
 
 #%%
 plt.figure(figsize = (20, 6))
-
 counts = df["Payment Method"].value_counts()
 explode = (0, 0, 0, 0, 0.0, 0.06)
 plt.title("Payment Method",weight="bold")
@@ -115,9 +121,9 @@ plt.xlabel('Size', weight = "bold", color = "#2F0F5D", fontsize = 14, labelpad =
 plt.axis('equal')
 plt.legend(labels = counts.index, loc = "best")
 plt.show()
+
 #%%
 plt.figure(figsize = (20, 6))
-
 counts = df["Frequency of Purchases"].value_counts()
 explode = (0, 0, 0, 0, 0.0, 0, 0.06)
 plt.title("Frequency of Purchases",weight="bold")
@@ -126,16 +132,14 @@ plt.xlabel('Size', weight = "bold", color = "#2F0F5D", fontsize = 14, labelpad =
 plt.axis('equal')
 plt.legend(labels = counts.index, loc = "best")
 plt.show()
+
 # %%
-
-
 # Visualize the missing values using a matrix
 msno.matrix(df)
 plt.title('Missing Values Matrix')
 plt.show()
+
 #%%
-
-
 # Count missing values per column
 missing_counts = df.isnull().sum()
 plt.figure(figsize=(12, 6))
@@ -147,8 +151,6 @@ plt.xticks(rotation=90)
 plt.show()
 
 # %%
-
-
 # Create a scatterplot to visualize the relationship between customer age and purchase amount
 sns.scatterplot(x='Age', y='Purchase Amount (USD)', data=df)
 plt.xlabel('Customer Age')
@@ -214,8 +216,6 @@ else:
 #Therefore, you conclude that there is no significant correlation between  customer's age and the purchase amount. 
 
 #%%
-
-
 # Create a bar chart to compare purchase amounts by item category
 sns.barplot(x='Category', y='Purchase Amount (USD)', data=df)
 plt.xlabel('Item Category')
@@ -225,8 +225,6 @@ plt.xticks(rotation=45)
 plt.show()
 
 # %%
-
-
 # Create a bar chart to compare purchase amounts by location
 plt.figure(figsize=(12, 6))  # Adjust the figure size to fit the labels
 ax = sns.barplot(x='Location', y='Purchase Amount (USD)', data=df)
@@ -236,10 +234,7 @@ plt.title('Location vs. Purchase Amount')
 ax.set_xticklabels(ax.get_xticklabels(), rotation=90, fontsize=10)  # Adjust rotation and label size
 plt.show()
 
-
 # %%
-
-
 # Create a bar chart to compare purchase amounts by customer gender
 sns.barplot(x='Gender', y='Purchase Amount (USD)', data=df)
 plt.xlabel('Customer Gender')
@@ -268,8 +263,6 @@ else:
 #Therefore, there is no significant difference in purchase amounts between Male and Female customers.
 
 # %%
-
-
 # Set style and context for better readability
 sns.set(style="whitegrid")
 sns.set_context("paper")
@@ -279,10 +272,7 @@ g = sns.pairplot(df, vars=['Age', 'Purchase Amount (USD)'], height=3)
 g.fig.suptitle("Pairplot of Age and Purchase Amount", y=1.02)  # Add a title
 plt.show()
 
-
 # %%
-
-
 # Select numeric columns for correlation analysis
 numeric_cols = df.select_dtypes(include='number')
 
@@ -293,27 +283,15 @@ sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', linewidths=0.5)
 plt.title('Correlation Heatmap')
 plt.show()
 
-
-
-
-
-
-
 # %%
-
-
 # Create a boxplot to compare purchase amounts by Size
-
 sns.boxplot(x='Size', y='Purchase Amount (USD)', data=df)
 plt.xlabel('Size')
 plt.ylabel('Purchase Amount (USD)')
 plt.title('Purchase Amount by Size ')
 plt.show()
 
-
 # %%
-
-
 # Create a histogram to visualize the distribution of purchase amounts
 plt.hist(df['Purchase Amount (USD)'], bins=20, color='skyblue', edgecolor='black')
 plt.xlabel('Purchase Amount (USD)')
@@ -322,17 +300,14 @@ plt.title('Purchase Amount Distribution')
 plt.show()
 
 # %%
-
-
 # Create a histogram to visualize the distribution of customer ages
 plt.hist(df['Age'], bins=20, color='salmon', edgecolor='black')
 plt.xlabel('Age')
 plt.ylabel('Frequency')
 plt.title('Customer Age Distribution')
 plt.show()
+
 # %%
-
-
 # Create a violin plot to show the distribution of purchase amounts by location
 plt.figure(figsize=(10, 6))  # Adjust the figure size
 ax = sns.violinplot(x='Category', y='Purchase Amount (USD)', data=df)
@@ -343,9 +318,7 @@ ax.set_xticklabels(ax.get_xticklabels(), fontsize=10, rotation=90)  # Adjust x-a
 
 plt.show()
 
-
 # %%
-
 # Create a bar chart to show gender and Shipping Type counts
 sns.countplot(x='Gender', hue='Shipping Type', data=df)
 plt.xlabel('Gender')
@@ -353,11 +326,7 @@ plt.ylabel('Count')
 plt.title('Gender and Shipping Type Counts')
 plt.show()
 
-
-
 # %%
-
-
 # Create a bar chart to show the average purchase amount by color
 plt.figure(figsize=(10, 6))
 sns.barplot(x='Color', y='Purchase Amount (USD)', data=df)
@@ -368,8 +337,6 @@ plt.xticks(rotation=45)
 plt.show()
 
 # %%
-
-
 # Create a bar chart to show the average purchase amount byPayment Method
 plt.figure(figsize=(10, 6))
 sns.barplot(x='Payment Method', y='Purchase Amount (USD)', data=df)
@@ -380,7 +347,6 @@ plt.xticks(rotation=45)
 plt.show()
 
 # %%
-
 # Create a bar chart to compare purchase amounts by season
 plt.figure(figsize=(10, 6))  # Adjust the figure size
 sns.barplot(x='Season', y='Purchase Amount (USD)', data=df, order=['Spring', 'Summer', 'Fall', 'Winter'])
@@ -389,8 +355,6 @@ plt.ylabel('Average Purchase Amount (USD)', fontsize=12)
 plt.title('Purchase Amount (USD) by Season', fontsize=14)
 
 plt.show()
-
-
 
 # Create a scatter plot
 plt.figure(figsize=(8, 6))  # Adjust the figure size
@@ -402,8 +366,6 @@ plt.title('Purchase Amount (USD) vs. Review Rating', fontsize=14)
 plt.show()
 
 # %%
-
-
 # Create a bar graph
 plt.figure(figsize=(10, 6))  # Adjust the figure size
 sns.barplot(x='Review Rating', y='Purchase Amount (USD)', data=df)
@@ -413,9 +375,6 @@ plt.title('Purchase Amount (USD) vs Review Rating', fontsize=14)
 plt.xticks(rotation=0)  # Adjust the rotation angle of x-axis labels if needed
 
 plt.show()
-
-# %%
-
 
 # %%
 ### DONE BY TEAM 
@@ -445,7 +404,6 @@ for axes in g.axes.flat:
 # Show the plot.
 plt.show()
 
-
 # %%
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
@@ -468,7 +426,6 @@ print(correlation_matrix)
 
 # %%
 plt.figure(figsize =(20,6))
-
 counts = df["Gender"].value_counts()
 explode = (0,0.05)
 
@@ -479,6 +436,7 @@ plt.ylabel('Counts', weight = "bold", color = "#2F0F5D", fontsize = 14, labelpad
 plt.legend(labels = counts.index, loc = "best")
 
 plt.show()
+
 # %%
 plt.figure(figsize=(20,6))
 
@@ -512,6 +470,7 @@ category_mapping ={"Clothing":1,"Footwear":2,"Outerwear":3,"Accessories":4}
 df['Gender'] = df['Gender'].map(Genger_mapping)
 df['Location']=df["Location"].map(state_numbers)
 df["Category"]=df["Category"].map(category_mapping)
+
 #%%
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -551,16 +510,6 @@ print(f"R-squared: {r2}")
 # Analyze coefficients
 coefficients = pd.DataFrame({'Variable': X.columns, 'Coefficient': model.coef_})
 print(coefficients)
-
-
-
-
-
-
-
-
-# %%
-df.isnull
 
 # %%
 import matplotlib.pyplot as plt
@@ -619,7 +568,6 @@ else:
 #negative correlation between a customer's age and the purchase amount. And the p-value is 0.5152, which is greater than the typical significance level of 0.05.
 #Therefore, you conclude that there is no significant correlation between  customer's age and the purchase amount. 
 
-# %%
 # %%
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
@@ -680,9 +628,6 @@ else:
 # %%
 #Is there a correlation between the purchase amount and the customer's
 #re-purchase behavior (e.g. number of previous purchases) and the product category?
-
-
-
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -700,7 +645,6 @@ plt.show()
 #'Previous Purchases' suggests no significant linear relationship between 
 #these variables, indicating that the frequency of a customer's previous 
 #purchases does not linearly correlate with their spending amount.
-
  
 # %%
 from sklearn.model_selection import train_test_split
@@ -748,7 +692,6 @@ mse, r2
 #is not better than a simplistic mean-based model. These outcomes suggest that the model's 
 #features lack a strong linear relationship with the 'Purchase Amount (USD)', and that exploring
 #non-linear models or incorporating additional factors might improve predictive accuracy.
-
 
 # %%
 ##Non-Linear Models
