@@ -70,87 +70,86 @@ plt.tight_layout()
 plt.show()
 
 #%%
-plt.figure(figsize = (20, 6))
-ax = df["Size"].value_counts().plot(kind = 'bar', color = ["red","blue","green","yellow"], rot = 0)
+plt.figure(figsize = (10, 6))
+colors = ['#3498db', '#2ecc71', '#e74c3c', '#f1c40f']
+ax = df["Size"].value_counts().plot(kind = 'bar', color = colors, rot = 0)
 ax.set_xticklabels(('Medium', 'Large', 'Small', 'Extra Large'))
-plt.title("Size vs frequency")
+plt.title("Clothing Size Distribution", weight='bold', fontsize='16')
 for p in ax.patches:
     ax.annotate(int(p.get_height()), (p.get_x() + 0.25, p.get_height() + 1), ha = 'center', va = 'bottom', color = 'black')
     ax.tick_params(axis = 'both', labelsize = 15)
-plt.xlabel('Size', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
-plt.ylabel('Number of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+plt.xlabel('Size(s)', weight = "bold", fontsize = 14, labelpad = 20)
+plt.ylabel('Count', weight = "bold", fontsize = 14, labelpad = 20)
 
 #%%
-plt.figure(figsize = (16, 6))
-df["Color"].value_counts()[:10].sort_values(ascending = True).plot(kind = 'barh', color = sns.color_palette('tab20'), edgecolor = 'black')
-plt.xlabel('Color', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
-plt.ylabel('\nNumber of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
-plt.xticks(rotation = 0, ha = 'center', fontsize = 16)
-plt.title("Colour vs frequency")
+plt.figure(figsize=(16, 8))
+palette = sns.color_palette("terrain", n_colors=10)
+df["Color"].value_counts()[:10].sort_values(ascending=True).plot(kind='barh', color=palette, edgecolor='black')
+plt.xlabel('Frequency Count', weight="bold", fontsize=16, labelpad=20)
+plt.ylabel('Color', weight="bold", fontsize=16, labelpad=20)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14, rotation=0, ha='right')
+plt.title("Top 10 Colors by Frequency", weight="bold", fontsize=18)
 plt.tight_layout()
 plt.show()
 
 #%%
-plt.figure(figsize = (20, 6))
+plt.figure(figsize=(16, 6))
 counts = df["Season"].value_counts()
-explode = (0, 0, 0, 0)
-
-counts.plot(kind = 'pie', fontsize = 12, colors = ["red","blue","green","yellow"], explode = explode, autopct = '%1.1f%%')
-plt.xlabel('Size', weight = "bold", color = "#2F0F5D", fontsize = 14, labelpad = 20)
-plt.title("Season vs Size")
+explode = (0, 0, 0, 0) 
+colors = sns.color_palette("pastel")
+counts.plot(kind='pie', fontsize=14, colors=colors, explode=explode, autopct='%1.1f%%', startangle=140)
+plt.title("Distribution by Season", weight="bold", fontsize=16)
 plt.axis('equal')
-plt.legend(labels = counts.index, loc = "best")
+plt.legend(labels=counts.index, title="Seasons", loc="best", fontsize=12)
 plt.show()
 
 #%%
-plt.figure(figsize = (20, 6))
+plt.figure(figsize = (10, 6))
 ax = df["Subscription Status"].value_counts().plot(kind = 'bar', color =["red","blue"] , rot = 0)
 ax.set_xticklabels(('No', 'Yes'))
-plt.title("Subscription Status")
+plt.title("Subscription Status", weight='bold', fontsize = 16)
 for p in ax.patches:
     ax.annotate(int(p.get_height()), (p.get_x() + 0.25, p.get_height() + 1), ha = 'center', va = 'bottom', color = 'black')
     ax.tick_params(axis = 'both', labelsize = 15)
-plt.xlabel('Subscription Status', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
-plt.ylabel('Number of Occurrences', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+plt.xlabel('Subscribed?', fontsize = 14, labelpad = 20)
+plt.ylabel('Number of People',fontsize = 14, labelpad = 20)
 
 #%%
-plt.figure(figsize = (20, 6))
+plt.figure(figsize=(15, 6))
 counts = df["Payment Method"].value_counts()
-explode = (0, 0, 0, 0, 0.0, 0.06)
-plt.title("Payment Method",weight="bold")
-counts.plot(kind = 'pie', fontsize = 12, colors = ["red","blue","green","yellow","pink","purple"], autopct = '%1.1f%%')
-plt.xlabel('Size', weight = "bold", color = "#2F0F5D", fontsize = 14, labelpad = 20)
+colors = sns.color_palette("Set2")
+plt.title("Distribution of Payment Methods", weight="bold", fontsize=16)
+counts.plot(kind='pie', fontsize=14, colors=colors, autopct='%1.1f%%', startangle=140)
 plt.axis('equal')
-plt.legend(labels = counts.index, loc = "best")
+plt.legend(labels=counts.index, loc="best", fontsize=12)
 plt.show()
 
 #%%
-plt.figure(figsize = (20, 6))
+plt.figure(figsize = (15, 6))
 counts = df["Frequency of Purchases"].value_counts()
-explode = (0, 0, 0, 0, 0.0, 0, 0.06)
-plt.title("Frequency of Purchases",weight="bold")
-counts.plot(kind = 'pie', fontsize = 12, colors  = ["red","blue","green","yellow","pink","purple","orange"], autopct = '%1.1f%%')
-plt.xlabel('Size', weight = "bold", color = "#2F0F5D", fontsize = 14, labelpad = 20)
+colors = sns.color_palette("tab10")
+plt.title("Frequency of Purchases Distribution", weight="bold", fontsize=16)
+counts.plot(kind='pie', fontsize=14, colors=colors, autopct='%1.1f%%', startangle=140)
 plt.axis('equal')
-plt.legend(labels = counts.index, loc = "best")
+plt.legend(labels=counts.index, loc="best", fontsize=12)
 plt.show()
 
-# %%
+# %% 
+# We already did this at the beginning. Maybe remove the below code?
 # Visualize the missing values using a matrix
-msno.matrix(df)
-plt.title('Missing Values Matrix')
-plt.show()
-
-#%%
+# msno.matrix(df)
+# plt.title('Missing Values Matrix')
+# plt.show()
 # Count missing values per column
-missing_counts = df.isnull().sum()
-plt.figure(figsize=(12, 6))
-sns.barplot(x=missing_counts.index, y=missing_counts.values)
-plt.xlabel('Columns')
-plt.ylabel('Number of Missing Values')
-plt.title('Count of Missing Values per Column')
-plt.xticks(rotation=90)
-plt.show()
+# missing_counts = df.isnull().sum()
+# plt.figure(figsize=(12, 6))
+# sns.barplot(x=missing_counts.index, y=missing_counts.values)
+# plt.xlabel('Columns')
+# plt.ylabel('Number of Missing Values')
+# plt.title('Count of Missing Values per Column')
+# plt.xticks(rotation=90)
+# plt.show()
 
 # %%
 # Create a scatterplot to visualize the relationship between customer age and purchase amount
@@ -450,7 +449,8 @@ for p in ax.patches:
 
     
 plt.xlabel('Item Gategory', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
-plt.ylabel('Counts', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20);
+plt.ylabel('Counts', weight = "bold", color = "#D71313", fontsize = 14, labelpad = 20)
+
 # %%
 # Define mappings for 'Category' and 'Location'
 category_mapping = {'Clothing': 1, 'Accessories': 2, 'Footwear': 3, 'Outerwear': 4,"Blouse":5}
