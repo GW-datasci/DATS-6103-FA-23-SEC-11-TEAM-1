@@ -807,3 +807,17 @@ cleaned_correlation, df.shape[0], data_no_outliers.shape[0]
 #The dataset size also remained the same, indicating no outliers were removed. This implies 
 #the weak correlation observed is not influenced by outliers and suggests that purchase amount 
 #does not significantly affect repeat purchases in this dataset.
+
+#%%
+##Group data by category
+# Grouping the data by 'Category' and calculating the correlation within each category
+category_correlations = data_no_outliers.groupby('Category').apply(
+    lambda group: group['Purchase Amount (USD)'].corr(group['Previous Purchases'])
+)
+
+category_correlations
+#These results suggest that within each product category, the correlation between purchase 
+#amount and the customer's tendency to repurchase is very weak, whether slightly positive
+#or negative. This reinforces the earlier finding that purchase amount does not significantly
+#influence repurchase behavior across the dataset as a whole. The inclusion of product categories
+#does not seem to change this conclusion significantly
