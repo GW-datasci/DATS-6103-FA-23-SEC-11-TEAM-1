@@ -868,6 +868,44 @@ print('ANOVA P-value:', p_val)
 #Previous Purchases: The correlation coefficient was 0.008063, indicating a very weak correlation with the purchase amount.
 
 
+# %%
+# Relationship between categorical variables and purchase amount
+# try to make group
+category_stats = df.groupby('Category')['Purchase Amount (USD)'].agg(['mean', 'median', 'count', 'std'])
+
+# Visualize the distribution of purchase amounts for different product categories
+sns.boxplot(x='Category', y='Purchase Amount (USD)', data=df)
+plt.title('Purchase Amount by Product Category')
+plt.show()
+
+
+# non-linear relationship between age and purchase amount
+from sklearn.preprocessing import PolynomialFeatures
+
+age = df['Age'].values.reshape(-1, 1)
+
+poly = PolynomialFeatures(degree=2, include_bias=False)
+age_poly = poly.fit_transform(age)
+
+model_poly = LinearRegression().fit(age_poly, df['Purchase Amount (USD)'])
+
+print('Coefficients for Age and Age^2:', model_poly.coef_)
+
+import numpy as np
+
+df['Log_Purchase_Amount'] = np.log(df['Purchase Amount (USD)'] + 1)
+
+
+# Try random forest regressors to capture more complex relationships
+from sklearn.ensemble import RandomForestRegressor
+
+rf = RandomForestRegressor(n_estimators=100, random_state=42)
+rf.fit(X, df['Log_Purchase_Amount'])
+
+# ...
+
+
+
 #%%
 df1 = df.copy(deep=True)
 # Calculate total sales for each item in each season
