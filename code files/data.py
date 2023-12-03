@@ -902,7 +902,42 @@ from sklearn.ensemble import RandomForestRegressor
 rf = RandomForestRegressor(n_estimators=100, random_state=42)
 rf.fit(X, df['Log_Purchase_Amount'])
 
-# ...
+# %%
+#the relationship between Previous Purchases and Location
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import f_oneway
+
+# Grouped Statistics
+grouped_location = df.groupby('Location')['Previous Purchases'].agg(['mean', 'median', 'std', 'count'])
+
+# Visualization
+plt.figure(figsize=(14, 7))
+sns.boxplot(x='Location', y='Previous Purchases', data=df)
+plt.xticks(rotation=90)  # Rotate the x labels if there are many locations
+plt.show()
+
+# Statistical Tests
+import pandas as pd
+from scipy import stats
+
+# Assuming 'df' is your DataFrame and it's already loaded with your data
+
+# Group the 'Previous Purchases' data by 'Location'
+grouped_data = df.groupby('Location')['Previous Purchases'].apply(list)
+
+# Convert the GroupBy object to a list of arrays, one for each group
+list_of_groups = [group for group in grouped_data]
+
+# Perform ANOVA
+anova_result = stats.f_oneway(*list_of_groups)
+
+print(f"F-statistic: {anova_result.statistic}, p-value: {anova_result.pvalue}")
+
+#This means that the location does not seem to have a statistically significant
+#effect on the number of previous purchases made by customers
 
 
 
