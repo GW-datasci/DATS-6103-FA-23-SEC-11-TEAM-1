@@ -772,6 +772,44 @@ category_correlations
 #influence repurchase behavior across the dataset as a whole. The inclusion of product categories
 #does not seem to change this conclusion significantly
 
+# %%
+#Previous Purchases VS Frequency of Purchases
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import scipy.stats as stats
+
+
+# Method 1: Descriptive statistical analysis
+
+frequency_grouped = df.groupby('Frequency of Purchases')['Previous Purchases'].mean()
+print(frequency_grouped)
+
+# Method 2: Visual analysis
+
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='Frequency of Purchases', y='Previous Purchases', data=df)
+plt.title('Previous Purchases by Frequency of Purchases')
+plt.show()
+
+
+# Method 3: Correlation analysis
+# correlation = df['Frequency of Purchases'].corr(df['Previous Purchases'])
+# print('Correlation:', correlation)
+
+# Method 4: Chi-square test
+contingency_table = pd.crosstab(df['Frequency of Purchases'], df['Previous Purchases'])
+chi2, p, dof, expected = stats.chi2_contingency(contingency_table)
+print('Chi-squared Test P-value:', p)
+
+##In summary, from the data provided, there is no significant statistical relationship between 
+#"Previous Purchases" and "Frequency of Purchases". This could mean that how often customers buy
+#does not directly determine their buying history.
+
+
+
+
+
 #%%
 df1 = df.copy(deep=True)
 # Calculate total sales for each item in each season
