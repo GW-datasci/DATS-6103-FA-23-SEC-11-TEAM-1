@@ -845,8 +845,10 @@ model.fit(X_train, y_train)
 
 # Predicting and Evaluating the Model
 y_pred = model.predict(X_test)
-mse = mean_squared_error(y_test, y_pred)
-print("Mean Squared Error:", mse)
+linear_mse = mean_squared_error(y_test, y_pred)
+linear_r2 = r2_score(y_test, y_pred)
+print("Linear Regression Mean Squared Error:", linear_mse)
+print("Linear Regression R-squared:", linear_r2)
 # %%
 from sklearn.tree import DecisionTreeRegressor
 
@@ -857,5 +859,25 @@ tree_model.fit(X_train, y_train)
 # Predicting and Evaluating the Model
 tree_predictions = tree_model.predict(X_test)
 tree_mse = mean_squared_error(y_test, tree_predictions)
+tree_r2 = r2_score(y_test, tree_predictions)
 print("Decision Tree Mean Squared Error:", tree_mse)
+print("Decision Tree R-squared:", tree_r2)
+
+# Feature Importance for Decision Tree
+print("Feature Importance (Decision Tree):", tree_model.feature_importances_)
+
+# %%
+# Visual Analysis: Plotting Actual vs Predicted Values for Linear Regression
+plt.scatter(X_test, y_test, color='blue', label='Actual')
+plt.scatter(X_test, y_pred, color='red', alpha=0.5, label='Predicted')
+plt.title('Linear Regression: Actual vs Predicted')
+plt.xlabel('Review Rating')
+plt.ylabel('Previous Purchases')
+plt.legend()
+plt.show()
+
+# %%
+# Conclusion
+print("\nConclusion:")
+print("The analysis with both models suggests a weak relationship between 'Review Rating' and 'Previous Purchases', as indicated by the high MSEs and low R-squared values.")
 # %%
