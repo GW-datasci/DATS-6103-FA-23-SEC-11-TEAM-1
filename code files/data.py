@@ -833,7 +833,39 @@ plt.show()
 chi2, p, dof, expected = stats.chi2_contingency(contingency_table)
 print('Chi-squared Test P-value:', p)
 
+#try to find some relationship with purchase amount and other variables.
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+from sklearn.linear_model import LinearRegression
 
+# # Correlation analysis
+
+numeric_columns = df.select_dtypes(include=['int64', 'float64']).columns
+correlations = df[numeric_columns].corrwith(df['Purchase Amount (USD)'])
+print(correlations)
+
+#Visualization
+sns.scatterplot(x='Age', y='Purchase Amount (USD)', data=df)
+plt.show()
+
+# Multiple regression analysis
+X = df[['Age', 'Previous Purchases', 'Review Rating']]  
+y = df['Purchase Amount (USD)']
+model = LinearRegression().fit(X, y)
+print('Regression Coefficients:', model.coef_)
+
+# ANOVA or T-test
+# Select a categorical variable as an example
+groups = df.groupby('Gender')['Purchase Amount (USD)'].apply(list)
+f_val, p_val = stats.f_oneway(*groups)
+print('ANOVA P-value:', p_val)
+
+#Customer ID: The correlation coefficient is 0.011048, indicating a very weak correlation with the purchase amount.
+#Age: The correlation coefficient is -0.010424, indicating little correlation with the purchase amount.
+#Review Rating: The correlation coefficient is 0.030776, indicating a very weak positive correlation with the purchase amount.
+#Previous Purchases: The correlation coefficient was 0.008063, indicating a very weak correlation with the purchase amount.
 
 
 #%%
