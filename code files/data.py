@@ -125,15 +125,17 @@ plt.axis('equal')
 plt.legend(labels=counts.index, loc="best", fontsize=12)
 plt.show()
 
-#%%
-plt.figure(figsize = (15, 6))
-counts = df["Frequency of Purchases"].value_counts()
-colors = sns.color_palette("tab10")
-plt.title("Frequency of Purchases Distribution", weight="bold", fontsize=16)
-counts.plot(kind='pie', fontsize=14, colors=colors, autopct='%1.1f%%', startangle=140)
-plt.axis('equal')
-plt.legend(labels=counts.index, loc="best", fontsize=12)
-plt.show()
+# EDA CODE BELOW ALSO USED IN SMART QUESTION.
+# REMOVING EDA FROM HERE TO PREVENT REDUNDANCY.
+# #%%
+# plt.figure(figsize = (15, 6))
+# counts = df["Frequency of Purchases"].value_counts()
+# colors = sns.color_palette("tab10")
+# plt.title("Frequency of Purchases Distribution", weight="bold", fontsize=16)
+# counts.plot(kind='pie', fontsize=14, colors=colors, autopct='%1.1f%%', startangle=140)
+# plt.axis('equal')
+# plt.legend(labels=counts.index, loc="best", fontsize=12)
+# plt.show()
 
 # %% 
 # We already did this at the beginning. Maybe remove the below code?
@@ -357,16 +359,19 @@ plt.title('Purchase Amount (USD) by Season', fontsize=14)
 
 plt.show()
 
-# Create a scatter plot
-plt.figure(figsize=(8, 6))  # Adjust the figure size
-sns.scatterplot(x='Review Rating', y='Purchase Amount (USD)', data=df)
-plt.xlabel('Review Rating', fontsize=12)
-plt.ylabel('Purchase Amount (USD)', fontsize=12)
-plt.title('Purchase Amount (USD) vs. Review Rating', fontsize=14)
+# EDA CODE BELOW ALSO USED IN SMART QUESTION.
+# REMOVING EDA FROM HERE TO PREVENT REDUNDANCY.
+# # %%
+# # Create a scatter plot
+# plt.figure(figsize=(8, 6))  # Adjust the figure size
+# sns.scatterplot(x='Review Rating', y='Purchase Amount (USD)', data=df)
+# plt.xlabel('Review Rating', fontsize=12)
+# plt.ylabel('Purchase Amount (USD)', fontsize=12)
+# plt.title('Purchase Amount (USD) vs. Review Rating', fontsize=14)
 
-plt.show()
+# plt.show()
 
-# %%
+    # %%
 # Create a bar graph
 plt.figure(figsize=(10, 6))  # Adjust the figure size
 sns.barplot(x='Review Rating', y='Purchase Amount (USD)', data=df)
@@ -793,3 +798,64 @@ sns.barplot(x='Item Purchased', y='Total Sales', data=winter_data, ax=axes[1, 1]
 # Adjust layout for readability
 plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.show()
+
+#%%
+## SMART QUESTION: What is the relationship between review ratings and repeat purchases? 
+# Using this analysis, we reveal if higher-rated products or services lead to more repeat purchases, indicating customer satisfaction.
+
+plt.figure(figsize=(8, 6))  # Adjust the figure size
+sns.scatterplot(x='Review Rating', y='Purchase Amount (USD)', data=df)
+plt.xlabel('Review Rating', fontsize=12)
+plt.ylabel('Purchase Amount (USD)', fontsize=12)
+plt.title('Purchase Amount (USD) vs. Review Rating', fontsize=14)
+plt.show()
+
+plt.figure(figsize = (15, 6))
+counts = df["Frequency of Purchases"].value_counts()
+colors = sns.color_palette("tab10")
+plt.title("Frequency of Purchases Distribution", weight="bold", fontsize=16)
+counts.plot(kind='pie', fontsize=14, colors=colors, autopct='%1.1f%%', startangle=140)
+plt.axis('equal')
+plt.legend(labels=counts.index, loc="best", fontsize=12)
+plt.show()
+
+# Relationship between Review Ratings and Previous Purchases
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='Review Rating', y='Previous Purchases', data=df)
+plt.title('Review Ratings vs. Previous Purchases')
+plt.show()
+
+# %%
+correlation = df[['Review Rating', 'Previous Purchases']].corr()
+print(correlation, "\n")
+print("Since the correlation coefficient (0.004229) between 'Review Rating' and 'Previous Purchases' is extremely close to 0, it suggests that there is virtually no linear relationship between these two variables.")
+print("This means that changes in review ratings do not predictably affect the number of previous purchases, and vice versa, at least not in a linear manner.")
+
+# %%
+# Preparing the data
+X = df[['Review Rating']]  # Predictor
+y = df['Previous Purchases']  # Target
+
+# Splitting the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Building the Linear Regression Model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predicting and Evaluating the Model
+y_pred = model.predict(X_test)
+mse = mean_squared_error(y_test, y_pred)
+print("Mean Squared Error:", mse)
+# %%
+from sklearn.tree import DecisionTreeRegressor
+
+# Building the Decision Tree Regressor
+tree_model = DecisionTreeRegressor(random_state=42)
+tree_model.fit(X_train, y_train)
+
+# Predicting and Evaluating the Model
+tree_predictions = tree_model.predict(X_test)
+tree_mse = mean_squared_error(y_test, tree_predictions)
+print("Decision Tree Mean Squared Error:", tree_mse)
+# %%
