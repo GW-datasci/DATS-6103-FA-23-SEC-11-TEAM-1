@@ -807,6 +807,32 @@ print('Chi-squared Test P-value:', p)
 #does not directly determine their buying history.
 
 
+# %%
+##Frequency of Purchases VS  Season
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+
+#Crosstab analysis
+
+contingency_table = pd.crosstab(df['Frequency of Purchases'], df['Season'])
+
+#Visual analysis
+
+plt.figure(figsize=(12, 8))
+sns.heatmap(contingency_table, annot=True, fmt="d", cmap="YlGnBu")
+plt.title("Frequency of Purchases vs Season")
+plt.ylabel('Frequency of Purchases')
+plt.xlabel('Season')
+plt.show()
+
+# Chi-square test
+
+chi2, p, dof, expected = stats.chi2_contingency(contingency_table)
+print('Chi-squared Test P-value:', p)
+
 
 
 
