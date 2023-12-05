@@ -988,6 +988,26 @@ plt.axis('equal')
 plt.legend(labels=counts.index, loc="best", fontsize=12)
 plt.show()
 
+# Adjusting the bins for Previous Purchases so that 50-54 is the highest bin
+df['Previous Purchases Grouped'] = pd.cut(df['Previous Purchases'], bins=[-1, 4, 9, 14, 19, 24, 29, 34, 39, 44, 49, 54], labels=['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54'])
+
+# Plot for Review Rating
+plt.figure(figsize=(10, 6))
+sns.countplot(x='Review Rating',hue='Review Rating', data=df, palette='viridis', legend=False)
+plt.title('Distribution of Review Ratings')
+plt.xlabel('Review Rating')
+plt.ylabel('Count')
+plt.show()
+
+# Plot for Previous Purchases Grouped
+plt.figure(figsize=(10, 6))
+sns.countplot(x='Previous Purchases Grouped', hue='Previous Purchases Grouped', data=df, palette='Set2')
+plt.title('Previous Purchases by Products')
+plt.xlabel('Previous Purchases')
+plt.ylabel('Count')
+plt.show()
+
+
 # Relationship between Review Ratings and Previous Purchases
 plt.figure(figsize=(10, 6))
 sns.boxplot(x='Review Rating', y='Previous Purchases', data=df)
