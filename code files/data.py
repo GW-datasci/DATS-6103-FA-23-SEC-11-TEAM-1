@@ -140,9 +140,16 @@ plt.show()
 # %% 
 # We already did this at the beginning. Maybe remove the below code?
 # Visualize the missing values using a matrix
+<<<<<<< Updated upstream
 # msno.matrix(df)
 # plt.title('Missing Values Matrix')
 # plt.show()
+=======
+msno.matrix(df)
+plt.title('Missing Values Matrix')
+plt.show()
+#%%
+>>>>>>> Stashed changes
 # Count missing values per column
 # missing_counts = df.isnull().sum()
 # plt.figure(figsize=(12, 6))
@@ -478,6 +485,11 @@ df['Gender'] = df['Gender'].map(Genger_mapping)
 df['Location']=df["Location"].map(state_numbers)
 df["Category"]=df["Category"].map(category_mapping)
 
+<<<<<<< Updated upstream
+=======
+#%%
+df.type()
+>>>>>>> Stashed changes
 #%%
 import pandas as pd
 from sklearn.model_selection import train_test_split
