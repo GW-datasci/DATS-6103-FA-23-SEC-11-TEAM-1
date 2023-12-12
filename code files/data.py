@@ -485,11 +485,22 @@ df['Gender'] = df['Gender'].map(Genger_mapping)
 df['Location']=df["Location"].map(state_numbers)
 df["Category"]=df["Category"].map(category_mapping)
 
-<<<<<<< Updated upstream
-=======
-#%%
-df.type()
->>>>>>> Stashed changes
+
+
+
+# %%
+# Select numeric columns for correlation analysis
+numeric_cols = df.select_dtypes(include='number')
+
+# Create a correlation heatmap
+correlation_matrix = numeric_cols.corr()
+plt.figure(figsize=(10, 8))  # Adjust the figure size if needed
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', linewidths=0.5)
+plt.title('Correlation Heatmap')
+plt.show()
+
+
+
 #%%
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -564,10 +575,7 @@ print("Slope:", slope)
 print("Intercept:", intercept)
 
 #The red line in the graph indicates the line of best fit to the data. It indicates the general trend of the purchase amount as the customer's age changes.
-#The slope of the regression line is approximately -0.0162, which means that for each additional year of age, the purchase amount decreases by approximately $0.016, with all other factors remaining constant.
-#The intercept is approximately $60.48. Theoretically, this suggests that a customer who is zero years old would correlate to a purchase of approximately $60.48, it's not meaningful because the baby can't buy a car. 
-#we can see the slope is very small, indicating a very weak negative correlation between age and purchase amount.
-
+#The slope of the regression line is approximately -0.026
 #Do correlation Test 
 from scipy.stats import pearsonr
 
@@ -583,9 +591,7 @@ if p_value < 0.05:
 else:
     print("There is no significant correlation between LOcation and Purchase Amount.")
 
-#The correlation coefficient is approximately -0.0104, so indicating a very weak
-#negative correlation between a customer's age and the purchase amount. And the p-value is 0.5152, which is greater than the typical significance level of 0.05.
-#Therefore, you conclude that there is no significant correlation between  customer's age and the purchase amount. 
+ 
 
 # %%
 import matplotlib.pyplot as plt
@@ -620,10 +626,6 @@ plt.show()
 print("Slope:", slope)
 print("Intercept:", intercept)
 
-#The red line in the graph indicates the line of best fit to the data. It indicates the general trend of the purchase amount as the customer's age changes.
-#The slope of the regression line is approximately -0.0162, which means that for each additional year of age, the purchase amount decreases by approximately $0.016, with all other factors remaining constant.
-#The intercept is approximately $60.48. Theoretically, this suggests that a customer who is zero years old would correlate to a purchase of approximately $60.48, it's not meaningful because the baby can't buy a car. 
-#we can see the slope is very small, indicating a very weak negative correlation between age and purchase amount.
 
 #Do correlation Test 
 from scipy.stats import pearsonr
@@ -640,9 +642,7 @@ if p_value < 0.05:
 else:
     print("There is no significant correlation between  Category and Purchase Amount.")
 
-#The correlation coefficient is approximately -0.0104, so indicating a very weak
-#negative correlation between a customer's age and the purchase amount. And the p-value is 0.5152, which is greater than the typical significance level of 0.05.
-#Therefore, you conclude that there is no significant correlation between  customer's age and the purchase amount. 
+
 
 # %%
 #Is there a correlation between the purchase amount and the customer's
