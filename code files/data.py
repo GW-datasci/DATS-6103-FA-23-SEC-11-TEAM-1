@@ -1076,3 +1076,22 @@ plt.show()
 print("\nConclusion:")
 print("The analysis with both models suggests a weak relationship between 'Review Rating' and 'Previous Purchases', as indicated by the high MSEs and low R-squared values.")
 # %%
+# Preparing the data with the squared predictor
+X = df[['Review Rating']]**2  # Squaring the predictor
+y = df['Previous Purchases']  # Target
+
+# Splitting the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Building the Linear Regression Model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predicting and Evaluating the Model
+y_pred = model.predict(X_test)
+linear_mse = mean_squared_error(y_test, y_pred)
+linear_r2 = r2_score(y_test, y_pred)
+print("Linear Regression Mean Squared Error:", linear_mse)
+print("Linear Regression R-squared:", linear_r2)
+
+# %%
