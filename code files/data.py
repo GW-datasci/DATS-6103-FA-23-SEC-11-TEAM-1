@@ -901,7 +901,6 @@ import numpy as np
 
 df['Log_Purchase_Amount'] = np.log(df['Purchase Amount (USD)'] + 1)
 
-
 # Try random forest regressors to capture more complex relationships
 from sklearn.ensemble import RandomForestRegressor
 
@@ -944,8 +943,6 @@ print(f"F-statistic: {anova_result.statistic}, p-value: {anova_result.pvalue}")
 
 #This means that the location does not seem to have a statistically significant
 #effect on the number of previous purchases made by customers
-
-
 
 #%%
 df1 = df.copy(deep=True)
@@ -1093,5 +1090,3 @@ linear_mse = mean_squared_error(y_test, y_pred)
 linear_r2 = r2_score(y_test, y_pred)
 print("Linear Regression Mean Squared Error:", linear_mse)
 print("Linear Regression R-squared:", linear_r2)
-
-# %%
