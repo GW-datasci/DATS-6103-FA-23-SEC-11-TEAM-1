@@ -1026,6 +1026,7 @@ linear_mse1 = mean_squared_error(y_test, y_pred)
 linear_r21 = r2_score(y_test, y_pred)
 print("Linear Regression Mean Squared Error:", linear_mse1)
 print("Linear Regression R-squared:", linear_r21)
+print("\n")
 
 print("Squaring the Variables and Trying again\n")
 # Preparing the data with the squared predictor
@@ -1077,8 +1078,11 @@ plt.title('R-squared Comparison')
 plt.ylabel('R-squared')
 plt.show()
 
+print("""Mean Squared Error (MSE) of 200.66 in Linear Regression indicates a poor model fit, showing a large average error.
+The negative R-squared value of -0.0027 suggests the model is worse than using the mean of the dependent variable for prediction.\n""")
+
 print("""For the first approach of squaring the predictor, the R-squared value is : -0.0025.
-This indicates a poor fit. A negative R-squared suggests that the model is worse than a horizontal line fit to the data.""")
+This indicates a poor fit. A negative R-squared suggests that the model is worse than a horizontal line fit to the data.\n""")
 
 print("""For the second approach of squaring the target variable, the R-squared value is :  -0.0039.
 These values are significantly worse than the first approach, indicating an even poorer model fit.""")
