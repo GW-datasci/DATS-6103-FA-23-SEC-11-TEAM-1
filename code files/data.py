@@ -957,7 +957,7 @@ plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.show()
 
 #%%
-## SMART QUESTION: What is the relationship between review ratings and repeat purchases? 
+## SMART QUESTION 2: What is the relationship between review ratings and repeat purchases? 
 # Using this analysis, we reveal if higher-rated products or services lead to more repeat purchases, indicating customer satisfaction.
 
 plt.figure(figsize=(8, 6))  # Adjust the figure size
@@ -1022,10 +1022,67 @@ model.fit(X_train, y_train)
 
 # Predicting and Evaluating the Model
 y_pred = model.predict(X_test)
-linear_mse = mean_squared_error(y_test, y_pred)
-linear_r2 = r2_score(y_test, y_pred)
-print("Linear Regression Mean Squared Error:", linear_mse)
-print("Linear Regression R-squared:", linear_r2)
+linear_mse1 = mean_squared_error(y_test, y_pred)
+linear_r21 = r2_score(y_test, y_pred)
+print("Linear Regression Mean Squared Error:", linear_mse1)
+print("Linear Regression R-squared:", linear_r21)
+
+print("Squaring the Variables and Trying again\n")
+# Preparing the data with the squared predictor
+X = df[['Review Rating']]**2  # Squaring the predictor
+y = df['Previous Purchases']  # Target
+
+# Splitting the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Building the Linear Regression Model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predicting and Evaluating the Model
+y_pred = model.predict(X_test)
+linear_mse2 = mean_squared_error(y_test, y_pred)
+linear_r22 = r2_score(y_test, y_pred)
+print("Squaring the Predictor (Review Rating)")
+print("Linear Regression Mean Squared Error:", linear_mse2)
+print("Linear Regression R-squared:", linear_r22)
+print('-----------------\n')
+
+# Preparing the data with the squared target variable
+X = df[['Review Rating']]  # predictor
+y = df['Previous Purchases']**2  # Target
+
+# Splitting the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Building the Linear Regression Model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predicting and Evaluating the Model
+y_pred = model.predict(X_test)
+linear_mse3 = mean_squared_error(y_test, y_pred)
+linear_r23 = r2_score(y_test, y_pred)
+print("Squaring the Target Variable (Previous Purchases)")
+print("Linear Regression Mean Squared Error:", linear_mse3)
+print("Linear Regression R-squared:", linear_r23)
+print("\n")
+
+models = ['Normal', 'Squared Predictor', 'Squared Target']
+r2_values = [linear_r21, linear_r22, linear_r23]
+
+plt.figure(figsize=(8, 5))
+plt.bar(models, r2_values, color=['blue', 'green', 'red'])
+plt.title('R-squared Comparison')
+plt.ylabel('R-squared')
+plt.show()
+
+print("""For the first approach of squaring the predictor, the R-squared value is : -0.0025.
+This indicates a poor fit. A negative R-squared suggests that the model is worse than a horizontal line fit to the data.""")
+
+print("""For the second approach of squaring the target variable, the R-squared value is :  -0.0039.
+These values are significantly worse than the first approach, indicating an even poorer model fit.""")
+
 # %%
 from sklearn.tree import DecisionTreeRegressor
 
@@ -1058,44 +1115,4 @@ plt.show()
 print("\nConclusion:")
 print("The analysis with both models suggests a weak relationship between 'Review Rating' and 'Previous Purchases', as indicated by the high MSEs and low R-squared values.")
 
-# %%
-print("Squaring the Variables and Trying again\n")
-# Preparing the data with the squared predictor
-X = df[['Review Rating']]**2  # Squaring the predictor
-y = df['Previous Purchases']  # Target
-
-# Splitting the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Building the Linear Regression Model
-model = LinearRegression()
-model.fit(X_train, y_train)
-
-# Predicting and Evaluating the Model
-y_pred = model.predict(X_test)
-linear_mse = mean_squared_error(y_test, y_pred)
-linear_r2 = r2_score(y_test, y_pred)
-print("Squaring the Predictor (Review Rating)")
-print("Linear Regression Mean Squared Error:", linear_mse)
-print("Linear Regression R-squared:", linear_r2)
-print('-----------------\n')
-
-# Preparing the data with the squared target variable
-X = df[['Review Rating']]  # predictor
-y = df['Previous Purchases']**2  # Target
-
-# Splitting the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Building the Linear Regression Model
-model = LinearRegression()
-model.fit(X_train, y_train)
-
-# Predicting and Evaluating the Model
-y_pred = model.predict(X_test)
-linear_mse = mean_squared_error(y_test, y_pred)
-linear_r2 = r2_score(y_test, y_pred)
-print("Squaring the Target Variable (Previous Purchases)")
-print("Linear Regression Mean Squared Error:", linear_mse)
-print("Linear Regression R-squared:", linear_r2)
 # %%
