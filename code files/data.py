@@ -360,18 +360,6 @@ plt.title('Purchase Amount (USD) by Season', fontsize=14)
 
 plt.show()
 
-# EDA CODE BELOW ALSO USED IN SMART QUESTION.
-# REMOVING EDA FROM HERE TO PREVENT REDUNDANCY.
-# # %%
-# # Create a scatter plot
-# plt.figure(figsize=(8, 6))  # Adjust the figure size
-# sns.scatterplot(x='Review Rating', y='Purchase Amount (USD)', data=df)
-# plt.xlabel('Review Rating', fontsize=12)
-# plt.ylabel('Purchase Amount (USD)', fontsize=12)
-# plt.title('Purchase Amount (USD) vs. Review Rating', fontsize=14)
-
-# plt.show()
-
     # %%
 # Create a bar graph
 plt.figure(figsize=(10, 6))  # Adjust the figure size
@@ -478,9 +466,6 @@ category_mapping ={"Clothing":1,"Footwear":2,"Outerwear":3,"Accessories":4}
 df['Gender'] = df['Gender'].map(Genger_mapping)
 df['Location']=df["Location"].map(state_numbers)
 df["Category"]=df["Category"].map(category_mapping)
-
-
-
 
 # %%
 # Select numeric columns for correlation analysis
@@ -1072,7 +1057,9 @@ plt.show()
 # Conclusion
 print("\nConclusion:")
 print("The analysis with both models suggests a weak relationship between 'Review Rating' and 'Previous Purchases', as indicated by the high MSEs and low R-squared values.")
+
 # %%
+print("Squaring the Variables and Trying again\n")
 # Preparing the data with the squared predictor
 X = df[['Review Rating']]**2  # Squaring the predictor
 y = df['Previous Purchases']  # Target
@@ -1088,11 +1075,13 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 linear_mse = mean_squared_error(y_test, y_pred)
 linear_r2 = r2_score(y_test, y_pred)
+print("Squaring the Predictor (Review Rating)")
 print("Linear Regression Mean Squared Error:", linear_mse)
 print("Linear Regression R-squared:", linear_r2)
+print('-----------------\n')
 
 # Preparing the data with the squared target variable
-X = df[['Review Rating']]**2  # predictor
+X = df[['Review Rating']]  # predictor
 y = df['Previous Purchases']**2  # Target
 
 # Splitting the data into training and testing sets
@@ -1106,5 +1095,7 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 linear_mse = mean_squared_error(y_test, y_pred)
 linear_r2 = r2_score(y_test, y_pred)
+print("Squaring the Target Variable (Previous Purchases)")
 print("Linear Regression Mean Squared Error:", linear_mse)
 print("Linear Regression R-squared:", linear_r2)
+# %%
