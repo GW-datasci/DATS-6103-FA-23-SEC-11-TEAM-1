@@ -862,12 +862,7 @@ sns.boxplot(x='Frequency of Purchases', y='Previous Purchases', data=df)
 plt.title('Previous Purchases by Frequency of Purchases')
 plt.show()
 
-
-# Method 3: Correlation analysis
-# correlation = df['Frequency of Purchases'].corr(df['Previous Purchases'])
-# print('Correlation:', correlation)
-
-# Method 4: Chi-square test
+# Method 3: Chi-square test
 contingency_table = pd.crosstab(df['Frequency of Purchases'], df['Previous Purchases'])
 chi2, p, dof, expected = stats.chi2_contingency(contingency_table)
 print('Chi-squared Test P-value:', p)
