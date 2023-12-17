@@ -24,7 +24,12 @@ sns.heatmap(df.isnull(), cbar=False, cmap='viridis')
 plt.title('Missing Values in the Dataset')
 plt.show()
 
-print("From the above plot, we see that the dataset has no missing values.")
+# %% 
+msno.matrix(df)
+plt.title('Missing Values Matrix')
+plt.show()
+
+print("From the above plots, we see that the dataset has no missing values.")
 
 #%%
 plt.figure(figsize = (10, 6))
@@ -124,35 +129,6 @@ counts.plot(kind='pie', fontsize=14, colors=colors, autopct='%1.1f%%', startangl
 plt.axis('equal')
 plt.legend(labels=counts.index, loc="best", fontsize=12)
 plt.show()
-
-# EDA CODE BELOW ALSO USED IN SMART QUESTION.
-# REMOVING EDA FROM HERE TO PREVENT REDUNDANCY.
-# #%%
-# plt.figure(figsize = (15, 6))
-# counts = df["Frequency of Purchases"].value_counts()
-# colors = sns.color_palette("tab10")
-# plt.title("Frequency of Purchases Distribution", weight="bold", fontsize=16)
-# counts.plot(kind='pie', fontsize=14, colors=colors, autopct='%1.1f%%', startangle=140)
-# plt.axis('equal')
-# plt.legend(labels=counts.index, loc="best", fontsize=12)
-# plt.show()
-
-# %% 
-# We already did this at the beginning. Maybe remove the below code?
-# Visualize the missing values using a matrix
-msno.matrix(df)
-plt.title('Missing Values Matrix')
-plt.show()
-#%%
-# Count missing values per column
-# missing_counts = df.isnull().sum()
-# plt.figure(figsize=(12, 6))
-# sns.barplot(x=missing_counts.index, y=missing_counts.values)
-# plt.xlabel('Columns')
-# plt.ylabel('Number of Missing Values')
-# plt.title('Count of Missing Values per Column')
-# plt.xticks(rotation=90)
-# plt.show()
 
 # %%
 # Create a scatterplot to visualize the relationship between customer age and purchase amount
