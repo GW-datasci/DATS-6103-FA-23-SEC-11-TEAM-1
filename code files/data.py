@@ -1,10 +1,36 @@
-
 #%%
-import seaborn as sns
-import matplotlib.pyplot as plt
-import pandas as pd
-import missingno as msno
+# Project Information
+# Authors: Team 1: Sandhya Karki, Qibin Huang, Rakesh Venigalla
+# Project Name: Customer Trends Dataset
+# Class: DATS 6103 SEC 11
+#%%
+# Importing Libraries
 
+# Data manipulation and analysis
+import pandas as pd
+
+# Data visualization
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Machine Learning - Model building and evaluation
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Machine Learning - Data preprocessing
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder, PolynomialFeatures
+from sklearn.compose import ColumnTransformer
+
+# Statistical Analysis
+from scipy.stats import pearsonr, ttest_ind, f_oneway
+import scipy.stats as stats
+import numpy as np
+
+# Data quality and missing value analysis
+import missingno as msno
 
 #%%
 df = pd.read_csv('shopping_trends.csv')
@@ -139,9 +165,7 @@ plt.title('Customer Age vs. Purchase Amount')
 plt.show()
 
 # %%
-import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
-import pandas as pd
+
 
 X = df['Age'].values.reshape(-1, 1)  # Predictor variable
 y = df['Purchase Amount (USD)'].values  # Response variable
@@ -177,7 +201,6 @@ print("Intercept:", intercept)
 #we can see the slope is very small, indicating a very weak negative correlation between age and purchase amount.
 
 #Do correlation Test 
-from scipy.stats import pearsonr
 
 # Calculate Pearson's correlation coefficient and p-value
 correlation, p_value = pearsonr(df['Age'], df['Purchase Amount (USD)'])
@@ -221,7 +244,8 @@ plt.xlabel('Customer Gender')
 plt.ylabel('Average Purchase Amount (USD)')
 plt.title('Customer Gender vs. Purchase Amount')
 plt.show()
-from scipy.stats import ttest_ind
+
+
 
 # Separate into Male and Female groups
 male_data = df[df['Gender'] == 'Male']
@@ -376,8 +400,7 @@ for axes in g.axes.flat:
 plt.show()
 
 # %%
-import pandas as pd
-from sklearn.preprocessing import LabelEncoder
+
 
 # Assuming 'data' is the DataFrame containing your dataset
 # Dropping non-numeric columns like 'Customer ID' and 'Promo Code Used' for correlation analysis
@@ -457,11 +480,7 @@ plt.show()
 
 
 #%%
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import LabelEncoder
-from sklearn.metrics import mean_squared_error, r2_score
+
 
 # Load your dataset (replace 'data.csv' with your dataset file)
 data = df
@@ -497,9 +516,7 @@ coefficients = pd.DataFrame({'Variable': X.columns, 'Coefficient': model.coef_})
 print(coefficients)
 
 # %%
-import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
-import pandas as pd
+
 
 X = df['Location'].values.reshape(-1, 1)  # Predictor variable
 y = df['Purchase Amount (USD)'].values  # Response variable
@@ -532,7 +549,7 @@ print("Intercept:", intercept)
 #The red line in the graph indicates the line of best fit to the data. It indicates the general trend of the purchase amount as the customer's age changes.
 #The slope of the regression line is approximately -0.026
 #Do correlation Test 
-from scipy.stats import pearsonr
+
 
 # Calculate Pearson's correlation coefficient and p-value
 correlation, p_value = pearsonr(df['Location'], df['Purchase Amount (USD)'])
@@ -549,9 +566,7 @@ else:
  
 
 # %%
-import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
-import pandas as pd
+
 
 X = df['Category'].values.reshape(-1, 1)  # Predictor variable
 y = df['Purchase Amount (USD)'].values  # Response variable
@@ -583,7 +598,7 @@ print("Intercept:", intercept)
 
 
 #Do correlation Test 
-from scipy.stats import pearsonr
+
 
 # Calculate Pearson's correlation coefficient and p-value
 correlation, p_value = pearsonr(df['Category'], df['Purchase Amount (USD)'])
@@ -602,8 +617,7 @@ else:
 # %%
 #Is there a correlation between the purchase amount and the customer's
 #re-purchase behavior (e.g. number of previous purchases) and the product category?
-import seaborn as sns
-import matplotlib.pyplot as plt
+
 
 # Correlation analysis between 'Purchase Amount (USD)' and 'Previous Purchases'
 ##heatmap
@@ -621,11 +635,7 @@ plt.show()
 #purchases does not linearly correlate with their spending amount.
  
 # %%
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.compose import ColumnTransformer
+
 
 # For simplicity, we will select a subset of potential predictor variables for the regression model
 # We will include both numeric and categorical variables and will use one-hot encoding for the categorical variables
@@ -670,7 +680,7 @@ mse, r2
 # %%
 ##Non-Linear Models
 #Random Forest
-from sklearn.ensemble import RandomForestRegressor
+
 
 # Create and fit the random forest regressor
 random_forest_regressor = RandomForestRegressor(n_estimators=100, random_state=42)
@@ -728,14 +738,7 @@ cleaned_correlation, df.shape[0], data_no_outliers.shape[0]
 
 #%%
 # After Square do linear Regression 
-import numpy as np
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.compose import ColumnTransformer
-import matplotlib.pyplot as plt
+
 
 # For simplicity, let's consider only numeric features and ignore categorical ones for this regression model
 numeric_features = ['Age', 'Review Rating', 'Previous Purchases']
@@ -820,10 +823,7 @@ category_correlations
 
 # %%
 #Previous Purchases VS Frequency of Purchases
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import scipy.stats as stats
+
 
 
 # Method 1: Descriptive statistical analysis
@@ -851,10 +851,6 @@ print('Chi-squared Test P-value:', p)
 # %%
 ##Frequency of Purchases VS  Season
 
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import scipy.stats as stats
 
 #Crosstab analysis
 
@@ -875,11 +871,7 @@ chi2, p, dof, expected = stats.chi2_contingency(contingency_table)
 print('Chi-squared Test P-value:', p)
 
 #try to find some relationship with purchase amount and other variables.
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import scipy.stats as stats
-from sklearn.linear_model import LinearRegression
+
 
 # # Correlation analysis
 
@@ -921,7 +913,6 @@ plt.show()
 
 
 # non-linear relationship between age and purchase amount
-from sklearn.preprocessing import PolynomialFeatures
 
 age = df['Age'].values.reshape(-1, 1)
 
@@ -932,12 +923,11 @@ model_poly = LinearRegression().fit(age_poly, df['Purchase Amount (USD)'])
 
 print('Coefficients for Age and Age^2:', model_poly.coef_)
 
-import numpy as np
 
 df['Log_Purchase_Amount'] = np.log(df['Purchase Amount (USD)'] + 1)
 
 # Try random forest regressors to capture more complex relationships
-from sklearn.ensemble import RandomForestRegressor
+
 
 rf = RandomForestRegressor(n_estimators=100, random_state=42)
 rf.fit(X, df['Log_Purchase_Amount'])
@@ -945,10 +935,7 @@ rf.fit(X, df['Log_Purchase_Amount'])
 # %%
 #the relationship between Previous Purchases and Location
 
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from scipy.stats import f_oneway
+
 
 # Grouped Statistics
 grouped_location = df.groupby('Location')['Previous Purchases'].agg(['mean', 'median', 'std', 'count'])
@@ -960,8 +947,7 @@ plt.xticks(rotation=90)  # Rotate the x labels if there are many locations
 plt.show()
 
 # Statistical Tests
-import pandas as pd
-from scipy import stats
+
 
 # Assuming 'df' is your DataFrame and it's already loaded with your data
 
@@ -1138,7 +1124,6 @@ print("""For the second approach of squaring the target variable, the R-squared 
 These values are significantly worse than the first approach, indicating an even poorer model fit.""")
 
 # %%
-from sklearn.tree import DecisionTreeRegressor
 
 # Building the Decision Tree Regressor
 tree_model = DecisionTreeRegressor(random_state=42)
