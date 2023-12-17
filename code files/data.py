@@ -749,6 +749,85 @@ cleaned_correlation, df.shape[0], data_no_outliers.shape[0]
 #the weak correlation observed is not influenced by outliers and suggests that purchase amount 
 #does not significantly affect repeat purchases in this dataset.
 
+
+#%%
+# After Square do linear Regression 
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+import matplotlib.pyplot as plt
+
+# For simplicity, let's consider only numeric features and ignore categorical ones for this regression model
+numeric_features = ['Age', 'Review Rating', 'Previous Purchases']
+X = df[numeric_features]
+y = df['Purchase Amount (USD)'] ** 2  # Squaring the target variable
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and fit the linear regression model
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
+
+# Predict on the test set
+y_pred = regressor.predict(X_test)
+
+# Calculate the performance metrics
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+# Calculate the square root of the MSE for interpretability
+rmse = np.sqrt(mse)
+
+# Returning the original MSE, RMSE, and R² for evaluation
+mse, rmse, r2
+
+
+
+
+
+#%%
+# Square the target variable X_processed
+y_transformed = y ** 2
+
+# Split the transformed data into training and testing sets
+X_train, X_test, y_train_trans, y_test_trans = train_test_split(X_processed, y_transformed, test_size=0.2, random_state=42)
+
+# Linear Regression on Transformed Data
+regressor.fit(X_train, y_train_trans)
+y_pred_trans = regressor.predict(X_test)
+
+# Calculate the performance metrics for the transformed data
+mse_trans = mean_squared_error(y_test_trans, y_pred_trans)
+r2_trans = r2_score(y_test_trans, y_pred_trans)
+
+# Random Forest on Transformed Data
+random_forest_regressor.fit(X_train, y_train_trans)
+y_pred_rf_trans = random_forest_regressor.predict(X_test)
+
+# Calculate the performance metrics for the Random Forest model on the transformed data
+mse_rf_trans = mean_squared_error(y_test_trans, y_pred_rf_trans)
+r2_rf_trans = r2_score(y_test_trans, y_pred_rf_trans)
+
+# Plot the actual vs predicted values using the Random Forest model on the transformed data for visualization
+plt.figure(figsize=(12, 6))
+
+# Plotting only the first 100 instances of the transformed data
+plt.scatter(range(len(y_test_trans[:100])), y_test_trans[:100], color='blue', label='Actual')
+plt.scatter(range(len(y_pred_rf_trans[:100])), y_pred_rf_trans[:100], color='red', label='Predicted', alpha=0.8)
+
+plt.title('Actual vs Predicted Purchase Amounts (USD) - Random Forest Model on Transformed Data')
+plt.xlabel('Index of Instance')
+plt.ylabel('Purchase Amount (USD) Squared')
+plt.legend()
+plt.show()
+
+
+
 #%%
 ##Group data by category
 # Grouping the data by 'Category' and calculating the correlation within each category
