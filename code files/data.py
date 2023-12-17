@@ -1,10 +1,11 @@
 #%%
-# Project Information
-# Authors: Team 1: Sandhya Karki, Qibin Huang, Rakesh Venigalla
 # Project Name: Customer Trends Dataset
+# Authors: Team 1: Sandhya Karki, Qibin Huang, Rakesh Venigalla
+# Description: This project analyzes an AI-generated dataset to understand consumer behavior and assess the relevance of such data in e-commerce, aiming to enhance retail strategies and evaluate AI's role in market trend analysis.
 # Class: DATS 6103 SEC 11
+
 #%%
-# Importing Libraries
+# 1. Importing Libraries
 
 # Data manipulation and analysis
 import pandas as pd
@@ -33,39 +34,42 @@ import numpy as np
 import missingno as msno
 
 #%%
+# 2. Data Importing
 df = pd.read_csv('shopping_trends.csv')
-df
 
-# %%
 # Summary of the data set
 df.describe()
 
 # %%
+# 3. Data Cleaning and Preprocessing
 df.isnull().sum()
 
-# %%
 # Create a heatmap to visualize missing values
 plt.figure(figsize=(10, 6))
 sns.heatmap(df.isnull(), cbar=False, cmap='viridis')
 plt.title('Missing Values in the Dataset')
 plt.show()
 
-# %% 
 msno.matrix(df)
 plt.title('Missing Values Matrix')
 plt.show()
 
 print("From the above plots, we see that the dataset has no missing values.")
+print("Hence we can continue further with dataset.")
 
 #%%
+# 4. Exploratory Data Analysis (EDA)
+# EDA: Gender Distribution
 plt.figure(figsize = (10, 6))
 ax = df["Gender"].value_counts().plot(kind = 'bar', color = ["#7f8c8d","#f39c12"], rot = 0)
 ax.set_xticklabels(('Male', 'Female'))
 plt.title("Gender Distribution",weight="bold")
 plt.xlabel('Gender', fontsize = 14, labelpad = 20)
 plt.ylabel('Count', fontsize = 14, labelpad = 20)
+plt.show()
 
 #%%
+# EDA: Age Distribution Histogram with Density Curve
 fig, ax = plt.subplots(figsize = (10, 6))
 ax.hist(df['Age'], bins = 25, edgecolor = 'black', alpha = 0.7, color = '#1f77b4', density = True)
 df['Age'].plot(kind = 'kde', color = 'red', ax = ax)
@@ -76,6 +80,7 @@ ax.legend(['Density Curve', 'Histogram'])
 plt.show()
 
 #%%
+# EDA: Distribution of Product Categories
 plt.figure(figsize = (12,8))
 colors = ['#3498db', '#2ecc71', '#e74c3c', '#f1c40f']
 ax = df["Category"].value_counts().plot(kind = 'bar', color=colors, rot = 0)
@@ -87,8 +92,10 @@ for p in ax.patches:
 plt.xlabel('Product Category', fontsize = 14, labelpad = 20)
 plt.title("Distribution of Product Categories", weight = "bold", fontsize = 16)
 plt.ylabel('Count', fontsize = 14, labelpad = 20)
+plt.show()
 
 #%%
+# EDA: Top 10 States by Purchase Frequency
 plt.figure(figsize=(14, 8))
 palette = sns.color_palette("viridis", n_colors=10)  # A gradient color palette
 df["Location"].value_counts()[:10].sort_values(ascending=False).plot(kind='bar', color=palette, edgecolor='black')
@@ -101,6 +108,7 @@ plt.tight_layout()
 plt.show()
 
 #%%
+# EDA: Clothing Size Distribution
 plt.figure(figsize = (10, 6))
 colors = ['#3498db', '#2ecc71', '#e74c3c', '#f1c40f']
 ax = df["Size"].value_counts().plot(kind = 'bar', color = colors, rot = 0)
@@ -111,8 +119,10 @@ for p in ax.patches:
     ax.tick_params(axis = 'both', labelsize = 15)
 plt.xlabel('Size(s)', weight = "bold", fontsize = 14, labelpad = 20)
 plt.ylabel('Count', weight = "bold", fontsize = 14, labelpad = 20)
+plt.show()
 
 #%%
+# EDA: Top 10 Colors by Frequency
 plt.figure(figsize=(16, 8))
 palette = sns.color_palette("terrain", n_colors=10)
 df["Color"].value_counts()[:10].sort_values(ascending=True).plot(kind='barh', color=palette, edgecolor='black')
@@ -125,6 +135,7 @@ plt.tight_layout()
 plt.show()
 
 #%%
+# EDA: Distribution by Season
 plt.figure(figsize=(16, 6))
 counts = df["Season"].value_counts()
 explode = (0, 0, 0, 0) 
@@ -136,6 +147,7 @@ plt.legend(labels=counts.index, title="Seasons", loc="best", fontsize=12)
 plt.show()
 
 #%%
+# EDA: Subscription Status
 plt.figure(figsize = (10, 6))
 ax = df["Subscription Status"].value_counts().plot(kind = 'bar', color =["red","blue"] , rot = 0)
 ax.set_xticklabels(('No', 'Yes'))
@@ -145,8 +157,10 @@ for p in ax.patches:
     ax.tick_params(axis = 'both', labelsize = 15)
 plt.xlabel('Subscribed?', fontsize = 14, labelpad = 20)
 plt.ylabel('Number of People',fontsize = 14, labelpad = 20)
+plt.show()
 
 #%%
+# EDA: Distribution of Payment Methods
 plt.figure(figsize=(15, 6))
 counts = df["Payment Method"].value_counts()
 colors = sns.color_palette("Set2")
@@ -157,23 +171,149 @@ plt.legend(labels=counts.index, loc="best", fontsize=12)
 plt.show()
 
 # %%
-# Create a scatterplot to visualize the relationship between customer age and purchase amount
+# EDA: Customer Age vs. Purchase Amount
 sns.scatterplot(x='Age', y='Purchase Amount (USD)', data=df)
 plt.xlabel('Customer Age')
 plt.ylabel('Purchase Amount (USD)')
 plt.title('Customer Age vs. Purchase Amount')
 plt.show()
 
+#%%
+# EDA: Item Category vs. Purchase Amount
+sns.barplot(x='Category', y='Purchase Amount (USD)', data=df)
+plt.xlabel('Item Category')
+plt.ylabel('Average Purchase Amount (USD)')
+plt.title('Item Category vs. Purchase Amount')
+plt.xticks(rotation=45)
+plt.show()
+
 # %%
+# EDA: Location vs. Purchase Amount
+plt.figure(figsize=(12, 6))  # Adjust the figure size to fit the labels
+ax = sns.barplot(x='Location', y='Purchase Amount (USD)', data=df)
+plt.xlabel('Location')
+plt.ylabel('Average Purchase Amount (USD)')
+plt.title('Location vs. Purchase Amount')
+ax.set_xticklabels(ax.get_xticklabels(), rotation=90, fontsize=10)  # Adjust rotation and label size
+plt.show()
 
+# %%
+# EDA: Pairplot of Age and Purchase Amount
+# Set style and context for better readability
+sns.set(style="whitegrid")
+sns.set_context("paper")
 
+# Create a pairplot for multivariate analysis
+g = sns.pairplot(df, vars=['Age', 'Purchase Amount (USD)'], height=3)
+g.fig.suptitle("Pairplot of Age and Purchase Amount", y=1.02)  # Add a title
+plt.show()
+
+# %%
+# EDA: Correlation Heatmap
+# Select numeric columns for correlation analysis
+numeric_cols = df.select_dtypes(include='number')
+
+# Create a correlation heatmap
+correlation_matrix = numeric_cols.corr()
+plt.figure(figsize=(10, 8))  # Adjust the figure size if needed
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', linewidths=0.5)
+plt.title('Correlation Heatmap')
+plt.show()
+
+# %%
+# EDA: Purchase Amount by Size
+# Create a boxplot to compare purchase amounts by Size
+sns.boxplot(x='Size', y='Purchase Amount (USD)', data=df)
+plt.xlabel('Size')
+plt.ylabel('Purchase Amount (USD)')
+plt.title('Purchase Amount by Size')
+plt.show()
+
+# %%
+# EDA: Purchase Amount Distribution
+# Create a histogram to visualize the distribution of purchase amounts
+plt.hist(df['Purchase Amount (USD)'], bins=20, color='skyblue', edgecolor='black')
+plt.xlabel('Purchase Amount (USD)')
+plt.ylabel('Frequency')
+plt.title('Purchase Amount Distribution')
+plt.show()
+
+# %%
+# EDA: Customer Age Distribution
+# Create a histogram to visualize the distribution of customer ages
+plt.hist(df['Age'], bins=20, color='salmon', edgecolor='black')
+plt.xlabel('Age')
+plt.ylabel('Frequency')
+plt.title('Customer Age Distribution')
+plt.show()
+
+# %%
+# EDA: Category-wise Purchase Amount Distribution
+# Create a violin plot to show the distribution of purchase amounts by location
+plt.figure(figsize=(10, 6))  # Adjust the figure size
+ax = sns.violinplot(x='Category', y='Purchase Amount (USD)', data=df)
+ax.set_xlabel('Category', fontsize=12)  # Set x-axis label and font size
+ax.set_ylabel('Purchase Amount (USD)', fontsize=12)  # Set y-axis label and font size
+ax.set_title('Category-wise Purchase Amount Distribution', fontsize=14)  # Set title and font size
+ax.set_xticklabels(ax.get_xticklabels(), fontsize=10, rotation=90)  # Adjust x-axis label font size and rotation
+
+plt.show()
+
+# %%
+# EDA: Gender and Shipping Type Counts
+sns.countplot(x='Gender', hue='Shipping Type', data=df)
+plt.xlabel('Gender')
+plt.ylabel('Count')
+plt.title('Gender and Shipping Type Counts')
+plt.show()
+
+# %%
+# EDA: Average Purchase Amount by color
+plt.figure(figsize=(10, 6))
+sns.barplot(x='Color', y='Purchase Amount (USD)', data=df)
+plt.xlabel('Color')
+plt.ylabel('Average Purchase Amount (USD)')
+plt.title('Average Purchase Amount by color')
+plt.xticks(rotation=45)
+plt.show()
+
+# %%
+# EDA: Average Purchase Amount by Payment Method
+plt.figure(figsize=(10, 6))
+sns.barplot(x='Payment Method', y='Purchase Amount (USD)', data=df)
+plt.xlabel('Payment Method')
+plt.ylabel('Average Purchase Amount (USD)')
+plt.title('Average Purchase Amount by Payment Method')
+plt.xticks(rotation=45)
+plt.show()
+
+# %%
+# EDA: Purchase Amount (USD) by Season
+# Create a bar chart to compare purchase amounts by season
+plt.figure(figsize=(10, 6))  # Adjust the figure size
+sns.barplot(x='Season', y='Purchase Amount (USD)', data=df, order=['Spring', 'Summer', 'Fall', 'Winter'])
+plt.xlabel('Season', fontsize=12)
+plt.ylabel('Average Purchase Amount (USD)', fontsize=12)
+plt.title('Purchase Amount (USD) by Season', fontsize=14)
+plt.show()
+#%%
+# EDA: Purchase Amount (USD) vs Review Rating todo:
+# Create a bar graph
+plt.figure(figsize=(10, 6))  # Adjust the figure size
+sns.barplot(x='Review Rating', y='Purchase Amount (USD)', data=df)
+plt.xlabel('Review Rating', fontsize=12)
+plt.ylabel('Purchase Amount (USD)', fontsize=12)
+plt.title('Purchase Amount (USD) vs Review Rating', fontsize=14)
+plt.xticks(rotation=0)  # Adjust the rotation angle of x-axis labels if needed
+plt.show()
+
+# %%
+# 5. Model Building:
 X = df['Age'].values.reshape(-1, 1)  # Predictor variable
 y = df['Purchase Amount (USD)'].values  # Response variable
 
 # create plot
 plt.figure(figsize=(10, 6))
-
-# scatterplot
 plt.scatter(X, y, color='blue', label='Actual Data')
 
 # create and bulid linearRegression
@@ -184,12 +324,10 @@ intercept = model.intercept_
 # using model to predict
 y_pred = model.predict(X)
 plt.plot(X, y_pred, color='red', label='Regression Line')
-
 plt.xlabel('Customer Age')
 plt.ylabel('Purchase Amount (USD)')
 plt.title('Linear Regression: Customer Age vs. Purchase Amount')
 plt.legend()
-
 plt.show()
 
 print("Slope:", slope)
@@ -218,34 +356,14 @@ else:
 #negative correlation between a customer's age and the purchase amount. And the p-value is 0.5152, which is greater than the typical significance level of 0.05.
 #Therefore, you conclude that there is no significant correlation between  customer's age and the purchase amount. 
 
-#%%
-# Create a bar chart to compare purchase amounts by item category
-sns.barplot(x='Category', y='Purchase Amount (USD)', data=df)
-plt.xlabel('Item Category')
-plt.ylabel('Average Purchase Amount (USD)')
-plt.title('Item Category vs. Purchase Amount')
-plt.xticks(rotation=45)
-plt.show()
-
 # %%
-# Create a bar chart to compare purchase amounts by location
-plt.figure(figsize=(12, 6))  # Adjust the figure size to fit the labels
-ax = sns.barplot(x='Location', y='Purchase Amount (USD)', data=df)
-plt.xlabel('Location')
-plt.ylabel('Average Purchase Amount (USD)')
-plt.title('Location vs. Purchase Amount')
-ax.set_xticklabels(ax.get_xticklabels(), rotation=90, fontsize=10)  # Adjust rotation and label size
-plt.show()
-
-# %%
+# Age Distribution Histogram with Density Curve
 # Create a bar chart to compare purchase amounts by customer gender
 sns.barplot(x='Gender', y='Purchase Amount (USD)', data=df)
 plt.xlabel('Customer Gender')
 plt.ylabel('Average Purchase Amount (USD)')
 plt.title('Customer Gender vs. Purchase Amount')
 plt.show()
-
-
 
 # Separate into Male and Female groups
 male_data = df[df['Gender'] == 'Male']
@@ -265,111 +383,6 @@ else:
 # t-statistic is approximately -0.8769.
 #The p-value is 0.3806, which is greater than the typical significance level of 0.05.
 #Therefore, there is no significant difference in purchase amounts between Male and Female customers.
-
-# %%
-# Set style and context for better readability
-sns.set(style="whitegrid")
-sns.set_context("paper")
-
-# Create a pairplot for multivariate analysis
-g = sns.pairplot(df, vars=['Age', 'Purchase Amount (USD)'], height=3)
-g.fig.suptitle("Pairplot of Age and Purchase Amount", y=1.02)  # Add a title
-plt.show()
-
-# %%
-# Select numeric columns for correlation analysis
-numeric_cols = df.select_dtypes(include='number')
-
-# Create a correlation heatmap
-correlation_matrix = numeric_cols.corr()
-plt.figure(figsize=(10, 8))  # Adjust the figure size if needed
-sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', linewidths=0.5)
-plt.title('Correlation Heatmap')
-plt.show()
-
-# %%
-# Create a boxplot to compare purchase amounts by Size
-sns.boxplot(x='Size', y='Purchase Amount (USD)', data=df)
-plt.xlabel('Size')
-plt.ylabel('Purchase Amount (USD)')
-plt.title('Purchase Amount by Size ')
-plt.show()
-
-# %%
-# Create a histogram to visualize the distribution of purchase amounts
-plt.hist(df['Purchase Amount (USD)'], bins=20, color='skyblue', edgecolor='black')
-plt.xlabel('Purchase Amount (USD)')
-plt.ylabel('Frequency')
-plt.title('Purchase Amount Distribution')
-plt.show()
-
-# %%
-# Create a histogram to visualize the distribution of customer ages
-plt.hist(df['Age'], bins=20, color='salmon', edgecolor='black')
-plt.xlabel('Age')
-plt.ylabel('Frequency')
-plt.title('Customer Age Distribution')
-plt.show()
-
-# %%
-# Create a violin plot to show the distribution of purchase amounts by location
-plt.figure(figsize=(10, 6))  # Adjust the figure size
-ax = sns.violinplot(x='Category', y='Purchase Amount (USD)', data=df)
-ax.set_xlabel('Category', fontsize=12)  # Set x-axis label and font size
-ax.set_ylabel('Purchase Amount (USD)', fontsize=12)  # Set y-axis label and font size
-ax.set_title('Category-wise Purchase Amount Distribution', fontsize=14)  # Set title and font size
-ax.set_xticklabels(ax.get_xticklabels(), fontsize=10, rotation=90)  # Adjust x-axis label font size and rotation
-
-plt.show()
-
-# %%
-# Create a bar chart to show gender and Shipping Type counts
-sns.countplot(x='Gender', hue='Shipping Type', data=df)
-plt.xlabel('Gender')
-plt.ylabel('Count')
-plt.title('Gender and Shipping Type Counts')
-plt.show()
-
-# %%
-# Create a bar chart to show the average purchase amount by color
-plt.figure(figsize=(10, 6))
-sns.barplot(x='Color', y='Purchase Amount (USD)', data=df)
-plt.xlabel('Color')
-plt.ylabel('Average Purchase Amount (USD)')
-plt.title('Average Purchase Amount by color')
-plt.xticks(rotation=45)
-plt.show()
-
-# %%
-# Create a bar chart to show the average purchase amount byPayment Method
-plt.figure(figsize=(10, 6))
-sns.barplot(x='Payment Method', y='Purchase Amount (USD)', data=df)
-plt.xlabel('Payment Method')
-plt.ylabel('Average Purchase Amount (USD)')
-plt.title('Average Purchase Amount by Payment Method')
-plt.xticks(rotation=45)
-plt.show()
-
-# %%
-# Create a bar chart to compare purchase amounts by season
-plt.figure(figsize=(10, 6))  # Adjust the figure size
-sns.barplot(x='Season', y='Purchase Amount (USD)', data=df, order=['Spring', 'Summer', 'Fall', 'Winter'])
-plt.xlabel('Season', fontsize=12)
-plt.ylabel('Average Purchase Amount (USD)', fontsize=12)
-plt.title('Purchase Amount (USD) by Season', fontsize=14)
-
-plt.show()
-
-    # %%
-# Create a bar graph
-plt.figure(figsize=(10, 6))  # Adjust the figure size
-sns.barplot(x='Review Rating', y='Purchase Amount (USD)', data=df)
-plt.xlabel('Review Rating', fontsize=12)
-plt.ylabel('Purchase Amount (USD)', fontsize=12)
-plt.title('Purchase Amount (USD) vs Review Rating', fontsize=14)
-plt.xticks(rotation=0)  # Adjust the rotation angle of x-axis labels if needed
-
-plt.show()
 
 # %%
 ### DONE BY TEAM 
@@ -401,8 +414,6 @@ plt.show()
 
 # %%
 
-
-# Assuming 'data' is the DataFrame containing your dataset
 # Dropping non-numeric columns like 'Customer ID' and 'Promo Code Used' for correlation analysis
 numeric_data = df.drop(columns=['Customer ID', 'Promo Code Used'])
 
@@ -482,7 +493,6 @@ plt.show()
 #%%
 
 
-# Load your dataset (replace 'data.csv' with your dataset file)
 data = df
 
 # Encode categorical variables
@@ -949,7 +959,6 @@ plt.show()
 # Statistical Tests
 
 
-# Assuming 'df' is your DataFrame and it's already loaded with your data
 
 # Group the 'Previous Purchases' data by 'Location'
 grouped_data = df.groupby('Location')['Previous Purchases'].apply(list)
@@ -1124,7 +1133,6 @@ print("""For the second approach of squaring the target variable, the R-squared 
 These values are significantly worse than the first approach, indicating an even poorer model fit.""")
 
 # %%
-
 # Building the Decision Tree Regressor
 tree_model = DecisionTreeRegressor(random_state=42)
 tree_model.fit(X_train, y_train)
