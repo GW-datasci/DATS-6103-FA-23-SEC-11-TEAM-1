@@ -26,7 +26,7 @@ from sklearn.preprocessing import LabelEncoder, OneHotEncoder, PolynomialFeature
 from sklearn.compose import ColumnTransformer
 
 # Statistical Analysis
-from scipy.stats import pearsonr, ttest_ind, f_oneway
+from scipy.stats import pearsonr, ttest_ind
 import scipy.stats as stats
 import numpy as np
 
@@ -40,7 +40,7 @@ df = pd.read_csv('shopping_trends.csv')
 # Summary of the data set
 df.describe()
 
-# %%
+#%%
 # 3. Data Cleaning and Preprocessing
 df.isnull().sum()
 
@@ -1078,8 +1078,6 @@ Age: The correlation coefficient is -0.010424, indicating little correlation wit
 Review Rating: The correlation coefficient is 0.030776, indicating a very weak positive correlation with the purchase amount.
 Previous Purchases: The correlation coefficient was 0.008063, indicating a very weak correlation with the purchase amount.
 """)
-
-
 
 # %%
 # SMART QUESTION 3: Relationship between Categories and Purchase amount
